@@ -3,7 +3,7 @@ import { Navbar } from 'components/layout/navbar';
 import { WelcomeToast } from 'components/welcome-toast';
 import { getCart } from 'lib/shopify';
 import { ensureStartsWith } from 'lib/utils';
-import { Cinzel, Josefin_Slab } from 'next/font/google';
+import { Chakra_Petch, Honk } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
@@ -36,14 +36,16 @@ export const metadata = {
     })
 };
 
-const cinzel = Cinzel({
+const honk = Honk({
   subsets: ['latin'],
-  variable: '--font-cinzel'
+  variable: '--font-honk'
 });
 
-const slab = Josefin_Slab({
+const chakra = Chakra_Petch({
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-slab'
+  variable: '--font-chakra'
 });
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
@@ -52,7 +54,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const cart = getCart(cartId);
 
   return (
-    <html lang="en" className={`${cinzel.variable} ${slab.variable} font-sans`}>
+    <html lang="en" className={`${honk.variable} ${chakra.variable} font-chakra`}>
       <body className="bg-white text-f-green-light selection:bg-f-orange">
         <CartProvider cartPromise={cart}>
           <Navbar />

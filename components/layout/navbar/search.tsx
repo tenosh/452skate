@@ -16,7 +16,7 @@ export default function Search() {
         placeholder="Buscar productos..."
         autoComplete="off"
         defaultValue={searchParams?.get('q') || ''}
-        className="text-md focus:focus-visible:border-green-dark w-full rounded-xl bg-f-green-light p-2 font-sans text-f-green-dark placeholder:font-sans placeholder:text-f-green-dark focus:outline-none focus:focus-visible:ring-2 focus:focus-visible:ring-f-green-dark md:text-sm"
+        className="text-md focus:focus-visible:border-green-dark font-chakra placeholder:font-chakra w-full rounded-xl bg-f-green-light p-2 text-f-green-dark placeholder:text-f-green-dark focus:outline-none focus:focus-visible:ring-2 focus:focus-visible:ring-f-green-dark md:text-sm"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
         <MagnifyingGlassIcon className="h-4 text-f-green-dark" />
@@ -30,7 +30,7 @@ export function SearchSkeleton() {
     <form className="w-max-[550px] relative w-full lg:w-80 xl:w-full">
       <input
         placeholder="Buscar productos..."
-        className="text-md focus:focus-visible:border-green-dark w-full rounded-xl bg-f-green-light p-2 font-sans text-f-green-dark placeholder:font-sans placeholder:text-f-green-dark focus:outline-none focus:focus-visible:ring-2 focus:focus-visible:ring-f-green-dark md:text-sm"
+        className="text-md focus:focus-visible:border-green-dark font-chakra placeholder:font-chakra w-full rounded-xl bg-f-green-light p-2 text-f-green-dark placeholder:text-f-green-dark focus:outline-none focus:focus-visible:ring-2 focus:focus-visible:ring-f-green-dark md:text-sm"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
         <MagnifyingGlassIcon className="h-4 text-f-green-dark" />

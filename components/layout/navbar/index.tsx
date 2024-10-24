@@ -13,7 +13,7 @@ export async function Navbar() {
   const menu = await getMenu('main-menu');
 
   return (
-    <nav className="relative flex items-center justify-between bg-f-green pt-2 font-serif">
+    <nav className="font-honk relative flex items-center justify-between bg-f-green pt-2">
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>
           <MobileMenu menu={menu} />

@@ -17,7 +17,7 @@ export async function SimpleHero() {
         />
       </div>
       <div className="cta-container relative flex w-full flex-col items-center text-center md:w-1/2 md:justify-end 2xl:justify-center">
-        <div className="ml:w-[200px] absolute right-[20%] top-0 z-0 hidden w-[140px] md:inline-block">
+        <div className="absolute right-[20%] top-0 z-0 hidden w-[140px] md:inline-block ml:w-[200px]">
           <Image
             src={logoWhiteTransparent}
             alt="Logo"
@@ -30,7 +30,7 @@ export async function SimpleHero() {
           />
         </div>
         <div className="z-10 max-w-[420px]">
-          <h1 className="mx-4 mb-4 font-serif text-4xl uppercase leading-[50px] tracking-wide">
+          <h1 className="font-honk mx-4 mb-4 text-4xl uppercase leading-[50px] tracking-wide">
             easy, femenine,
             <i className="italic"> & </i>
             nostalgic

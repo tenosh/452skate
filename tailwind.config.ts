@@ -14,17 +14,17 @@ const config: Config = {
         '2xl': '1536px'
       },
       colors: {
-        'f-orange': '#C66928',
-        'f-green': '#A9B489',
-        'f-green-dark': '#5F6F52',
-        'f-green-light': '#FCFCE4',
-        'f-brown': '#BA9470',
-        'f-brown-light': '#F9ECC9',
-        'f-brown-dark': '#783E19'
+        '452-orange': '#C66928',
+        '452-green': '#A9B489',
+        '452-green-dark': '#5F6F52',
+        '452-green-light': '#FCFCE4',
+        '452-brown': '#BA9470',
+        '452-brown-light': '#F9ECC9',
+        '452-brown-dark': '#783E19'
       },
       fontFamily: {
-        sans: ['var(--font-slab)'],
-        serif: ['var(--font-cinzel)']
+        honk: ['var(--font-honk)'],
+        chakra: ['var(--font-chakra)']
       },
       keyframes: {
         fadeIn: {
@@ -38,7 +38,7 @@ const config: Config = {
         blink: {
           '0%': { opacity: '0.2' },
           '20%': { opacity: '1' },
-          '100% ': { opacity: '0.2' }
+          '100%': { opacity: '0.2' }
         }
       },
       animation: {
