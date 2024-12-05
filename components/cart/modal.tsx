@@ -52,7 +52,7 @@ export default function CartModal() {
       <button
         aria-label="Abrir carrito de compras"
         onClick={openCart}
-        className="flex h-11 w-11 items-center"
+        className="text-452-blue-light flex items-center"
       >
         <OpenCart quantity={cart?.totalQuantity} />
       </button>
@@ -78,10 +78,10 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <DialogPanel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l bg-f-brown-light p-6 text-f-green-dark backdrop-blur-3xl md:w-[390px]">
+            <DialogPanel className="border-452-blue-light fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l bg-white p-6 backdrop-blur-3xl md:w-[390px]">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">Bolso de compras</p>
-                <button aria-label="Close cart" onClick={closeCart}>
+                <button aria-label="Cerrar carrito de compras" onClick={closeCart}>
                   <CloseCart />
                 </button>
               </div>
@@ -113,13 +113,13 @@ export default function CartModal() {
                         );
 
                         return (
-                          <li key={i} className="flex w-full flex-col border-b border-f-green-dark">
+                          <li key={i} className="border-f-green-dark flex w-full flex-col border-b">
                             <div className="relative flex w-full flex-row justify-between px-1 py-4">
                               <div className="absolute z-40 -ml-1 -mt-2">
                                 <DeleteItemButton item={item} optimisticUpdate={updateCartItem} />
                               </div>
                               <div className="flex flex-row">
-                                <div className="bg-f-border-f-green relative h-16 w-16 overflow-hidden rounded-md border border-f-green">
+                                <div className="bg-f-border-f-green border-f-green relative h-16 w-16 overflow-hidden rounded-md border">
                                   <Image
                                     className="h-full w-full object-cover"
                                     width={64}
@@ -141,7 +141,7 @@ export default function CartModal() {
                                       {item.merchandise.product.title}
                                     </span>
                                     {item.merchandise.title !== DEFAULT_OPTION ? (
-                                      <p className="text-sm text-f-orange">
+                                      <p className="text-f-orange text-sm">
                                         {item.merchandise.title}
                                       </p>
                                     ) : null}
@@ -154,13 +154,13 @@ export default function CartModal() {
                                   amount={item.cost.totalAmount.amount}
                                   currencyCode={item.cost.totalAmount.currencyCode}
                                 />
-                                <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-f-green-dark">
+                                <div className="border-f-green-dark ml-auto flex h-9 flex-row items-center rounded-full border">
                                   <EditItemQuantityButton
                                     item={item}
                                     type="minus"
                                     optimisticUpdate={updateCartItem}
                                   />
-                                  <p className="w-6 text-center text-f-orange">
+                                  <p className="text-f-orange w-6 text-center">
                                     <span className="text-md w-full">{item.quantity}</span>
                                   </p>
                                   <EditItemQuantityButton
@@ -176,22 +176,22 @@ export default function CartModal() {
                       })}
                   </ul>
                   <div className="text-neutral-5000 py-4 text-sm">
-                    <div className="mb-3 flex items-center justify-between border-b border-f-green-dark pb-1">
+                    <div className="border-f-green-dark mb-3 flex items-center justify-between border-b pb-1">
                       <p>Impuestos</p>
                       <Price
-                        className="text-right text-base text-f-orange"
+                        className="text-f-orange text-right text-base"
                         amount={cart.cost.totalTaxAmount.amount}
                         currencyCode={cart.cost.totalTaxAmount.currencyCode}
                       />
                     </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-f-green-dark pb-1 pt-1">
+                    <div className="border-f-green-dark mb-3 flex items-center justify-between border-b pb-1 pt-1">
                       <p>Envío</p>
                       <p className="text-right">Se calcula al moento del pago</p>
                     </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-f-green-dark pb-1 pt-1">
+                    <div className="border-f-green-dark mb-3 flex items-center justify-between border-b pb-1 pt-1">
                       <p>Totál</p>
                       <Price
-                        className="text-right text-base text-f-orange"
+                        className="text-f-orange text-right text-base"
                         amount={cart.cost.totalAmount.amount}
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
@@ -215,7 +215,7 @@ function CheckoutButton() {
 
   return (
     <button
-      className="block w-full rounded-full bg-f-orange p-3 text-center text-sm font-medium text-f-green-light opacity-90 hover:opacity-100"
+      className="bg-f-orange text-f-green-light block w-full rounded-full p-3 text-center text-sm font-medium opacity-90 hover:opacity-100"
       type="submit"
       disabled={pending}
     >

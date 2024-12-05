@@ -18,10 +18,10 @@ const Label = ({
         'lg:px-20 lg:pb-[35%]': position === 'center'
       })}
     >
-      <div className="font-honk flex items-center rounded-sm bg-f-orange/50 p-1 text-sm text-f-green-light backdrop-blur-md lg:text-base">
+      <div className="font-oswald bg-f-orange/50 text-f-green-light flex items-center rounded-sm p-1 text-sm backdrop-blur-md lg:text-base">
         <h3 className="mr-4 line-clamp-2 flex-grow pl-2 leading-none tracking-tight">{title}</h3>
         <Price
-          className="font-chakra flex-none rounded-sm bg-f-brown-dark/80 p-2"
+          className="bg-f-brown-dark/80 flex-none rounded-sm p-2 font-chakra"
           amount={amount}
           currencyCode={currencyCode}
           currencyCodeClassName="hidden @[275px]/label:inline"

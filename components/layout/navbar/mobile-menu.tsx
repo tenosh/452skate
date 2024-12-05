@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Fragment, Suspense, useEffect, useState } from 'react';
 
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars4Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Menu } from 'lib/shopify/types';
 import Search, { SearchSkeleton } from './search';
 
@@ -35,9 +35,9 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
       <button
         onClick={openMobileMenu}
         aria-label="Abrir el menu movil"
-        className="flex h-11 w-11 items-center justify-center pl-4 transition-colors md:hidden md:pl-0"
+        className="text-452-blue-light flex items-center justify-center transition-colors md:hidden"
       >
-        <Bars3Icon className="h-8" />
+        <Bars4Icon className="h-8" />
       </button>
       <Transition show={isOpen}>
         <Dialog onClose={closeMobileMenu} className="relative z-50">
@@ -61,12 +61,12 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-[-100%]"
           >
-            <DialogPanel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-f-brown-light pb-6">
+            <DialogPanel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-white pb-6">
               <div className="p-4">
                 <button
-                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-f-green-dark text-f-green-dark transition-colors"
+                  className="border-452-blue-light text-452-blue-light mb-4 ml-auto flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
                   onClick={closeMobileMenu}
-                  aria-label="Close mobile menu"
+                  aria-label="Cerrar menu"
                 >
                   <XMarkIcon className="h-6" />
                 </button>
@@ -79,7 +79,10 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
                     {menu.map((item: Menu) => (
-                      <li className="py-2 text-xl text-f-orange transition-colors" key={item.title}>
+                      <li
+                        className="text-452-blue-light py-2 text-xl transition-colors"
+                        key={item.title}
+                      >
                         <Link href={item.path} prefetch={true} onClick={closeMobileMenu}>
                           {item.title}
                         </Link>

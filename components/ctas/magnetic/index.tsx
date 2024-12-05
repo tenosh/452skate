@@ -60,7 +60,7 @@ export default function MagneticLink({ href, className = '', children }: Magneti
       <Link
         ref={ref}
         href={href}
-        className={`font-honk relative inline-block overflow-hidden rounded-sm bg-f-orange p-3 text-base uppercase text-white focus:outline-none focus:ring-2 focus:ring-f-green ${className}`}
+        className={`font-oswald bg-f-orange focus:ring-f-green relative inline-block overflow-hidden rounded-sm p-3 text-base uppercase text-white focus:outline-none focus:ring-2 ${className}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         aria-label="Ver lo nuevo"

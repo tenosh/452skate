@@ -14,17 +14,15 @@ const config: Config = {
         '2xl': '1536px'
       },
       colors: {
-        '452-orange': '#C66928',
-        '452-green': '#A9B489',
-        '452-green-dark': '#5F6F52',
-        '452-green-light': '#FCFCE4',
-        '452-brown': '#BA9470',
-        '452-brown-light': '#F9ECC9',
-        '452-brown-dark': '#783E19'
+        '452-gray-dark': '#4988BD',
+        '452-gray-light': '#C6CCD8',
+        '452-blue-light': '#4988BD',
+        '452-blue-dark': '#093D77'
       },
       fontFamily: {
         honk: ['var(--font-honk)'],
-        chakra: ['var(--font-chakra)']
+        chakra: ['var(--font-chakra)'],
+        oswald: ['var(--font-oswald)']
       },
       keyframes: {
         fadeIn: {
