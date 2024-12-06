@@ -2,6 +2,7 @@
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import CartModal from 'components/cart/modal';
+import MagneticElement from 'components/ctas/magnetic';
 import Logo from 'components/layout/logo/logo';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { menuFilters } from 'lib/constants';
@@ -136,7 +137,9 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
           </div>
           <div className="flex gap-6 md:gap-8">
             <motion.div style={{ color: textColor }} className="flex items-center text-white">
-              <MagnifyingGlassIcon className="h-6 w-6 transition-all ease-in-out hover:scale-110 lg:h-7 lg:w-7" />
+              <MagneticElement>
+                <MagnifyingGlassIcon className="h-6 w-6 transition-all ease-in-out hover:scale-110 lg:h-7 lg:w-7" />
+              </MagneticElement>
             </motion.div>
             <CartModal />
           </div>
@@ -195,12 +198,24 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
                                       delay: 0.1 + index * 0.03
                                     }}
                                   >
-                                    <Link
-                                      href={`${item.path}?${category}=${value.replace('"', '').toLocaleLowerCase()}`}
-                                      className="text-452-blue-light hover:text-452-blue-dark ml-2 font-chakra text-base tracking-wider md:text-lg"
-                                    >
-                                      {value}
-                                    </Link>
+                                    <motion.span whileHover="hover" initial="initial">
+                                      <Link
+                                        href={`${item.path}?${category}=${value.replace('"', '').toLocaleLowerCase()}`}
+                                        className="text-452-blue-light hover:text-452-blue-dark ml-2 font-chakra text-base tracking-wider md:text-lg"
+                                      >
+                                        <span className="relative inline-block">
+                                          {value}
+                                          <motion.div
+                                            className="bg-452-blue-dark absolute -bottom-0 left-0 right-0 h-[2px]"
+                                            variants={{
+                                              initial: { scaleX: 0, transformOrigin: 'left' },
+                                              hover: { scaleX: 1, transformOrigin: 'left' }
+                                            }}
+                                            transition={{ duration: 0.3 }}
+                                          />
+                                        </span>
+                                      </Link>
+                                    </motion.span>
                                   </motion.li>
                                 ))}
                               </ul>

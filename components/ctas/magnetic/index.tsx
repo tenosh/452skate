@@ -1,18 +1,16 @@
 'use client';
 
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
-interface MagneticLinkProps {
-  href: string;
+interface MagneticElementProps {
   className?: string;
   children: React.ReactNode;
 }
 
-export default function MagneticLink({ href, className = '', children }: MagneticLinkProps) {
+export default function MagneticElement({ className = '', children }: MagneticElementProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const ref = useRef<HTMLAnchorElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -31,8 +29,8 @@ export default function MagneticLink({ href, className = '', children }: Magneti
       const deltaX = clientX - centerX;
       const deltaY = clientY - centerY;
 
-      const magneticPull = isHovered ? 0.1 : 0;
-      const maxDistance = 5;
+      const magneticPull = isHovered ? 0.5 : 0;
+      const maxDistance = 10;
 
       const moveX = Math.min(Math.max(deltaX * magneticPull, -maxDistance), maxDistance);
       const moveY = Math.min(Math.max(deltaY * magneticPull, -maxDistance), maxDistance);
@@ -56,17 +54,14 @@ export default function MagneticLink({ href, className = '', children }: Magneti
   };
 
   return (
-    <motion.div style={{ x: springX, y: springY }}>
-      <Link
-        ref={ref}
-        href={href}
-        className={`font-oswald bg-f-orange focus:ring-f-green relative inline-block overflow-hidden rounded-sm p-3 text-base uppercase text-white focus:outline-none focus:ring-2 ${className}`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        aria-label="Ver lo nuevo"
-      >
-        {children}
-      </Link>
+    <motion.div
+      ref={ref}
+      style={{ x: springX, y: springY }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={className}
+    >
+      {children}
     </motion.div>
   );
 }
