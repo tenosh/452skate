@@ -30,3 +30,13 @@ export const getProductRecommendationsQuery = /* GraphQL */ `
   }
   ${productFragment}
 `;
+
+export const getProductTagsQuery = /* GraphQL */ `
+  query getProductTags {
+    productTags(first: 100) {
+      edges {
+        node
+      }
+    }
+  }
+`;

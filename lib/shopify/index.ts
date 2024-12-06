@@ -21,7 +21,8 @@ import { getPageQuery, getPagesQuery } from './queries/page';
 import {
   getProductQuery,
   getProductRecommendationsQuery,
-  getProductsQuery
+  getProductsQuery,
+  getProductTagsQuery
 } from './queries/product';
 import {
   Cart,
@@ -46,6 +47,7 @@ import {
   ShopifyProductOperation,
   ShopifyProductRecommendationsOperation,
   ShopifyProductsOperation,
+  ShopifyProductTags,
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation
 } from './types';
@@ -310,6 +312,22 @@ export async function getCollectionProducts({
   }
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products));
+}
+
+export async function getProductTags(): Promise<string[]> {
+  const res = await shopifyFetch<ShopifyProductTags>({
+    query: getProductTagsQuery,
+    tags: [TAGS.products]
+  });
+
+  debugger;
+
+  if (!res.body.data.productTags) {
+    console.log(`No tags found`);
+    return [];
+  }
+
+  return res.body.data.productTags;
 }
 
 export async function getCollections(): Promise<Collection[]> {

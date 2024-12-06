@@ -200,6 +200,21 @@ export type ShopifyCollectionOperation = {
   };
 };
 
+export type ShopifyProductFilter = {
+  available?: boolean;
+  price?: {
+    min?: string;
+    max?: string;
+  };
+  productType?: string;
+  productVendor?: string;
+  tag?: string;
+  variantOption?: {
+    name: string;
+    value: string;
+  };
+};
+
 export type ShopifyCollectionProductsOperation = {
   data: {
     collection: {
@@ -210,6 +225,7 @@ export type ShopifyCollectionProductsOperation = {
     handle: string;
     reverse?: boolean;
     sortKey?: string;
+    filters?: ShopifyProductFilter[];
   };
 };
 
@@ -268,5 +284,11 @@ export type ShopifyProductsOperation = {
     query?: string;
     reverse?: boolean;
     sortKey?: string;
+  };
+};
+
+export type ShopifyProductTags = {
+  data: {
+    productTags: string[];
   };
 };
