@@ -1,3 +1,4 @@
+import MainCta from 'components/ctas/main';
 import Image from 'next/image';
 import simpleHeroImg from './main-banner.jpg';
 
@@ -13,6 +14,14 @@ export async function SimpleHero() {
           height={1717}
           priority={true}
         />
+      </div>
+      <div className="absolute bottom-8 left-8 z-10 flex max-w-[90%] flex-col gap-4 md:max-w-[500px]">
+        <h1 className="font-oswald mb-5 text-3xl font-semibold uppercase leading-9 tracking-wide text-white md:text-5xl md:leading-[1.2]">
+          Conectando lo mejor del skate en México
+        </h1>
+        <div>
+          <MainCta href="/search">Ver todos los productos</MainCta>
+        </div>
       </div>
     </section>
   );
