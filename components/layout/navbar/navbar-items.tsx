@@ -40,22 +40,22 @@ function addSubitems(menu: Menu[]): MenuWithSubItems[] {
 
 export default function NavbarItems({ menu }: NavbarItemsProps) {
   const menuWithSubItems = addSubitems(menu);
-  const { scrollY } = useScroll();
+  const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+  const { scrollY } = useScroll();
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
     ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']
   );
-
   const textColor = useTransform(
     scrollY,
     [0, 100],
     ['rgb(255, 255, 255)', 'rgb(73, 136, 189)'] // white to 452-blue-light
   );
 
-  const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
-
+  // local helpers
   const handleMouseEnter = (title: string) => {
     if (closeTimeout) {
       clearTimeout(closeTimeout);
@@ -71,6 +71,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
     setCloseTimeout(timeout);
   };
 
+  // effects
   useEffect(() => {
     return () => {
       if (closeTimeout) {
@@ -103,7 +104,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
           </Link>
           <div className="hidden py-2 md:flex">
             {menu.length ? (
-              <ul className="hidden gap-6 text-sm md:flex md:items-center">
+              <ul className="hidden gap-4 md:flex md:items-center lg:gap-6">
                 {menuWithSubItems.map((item: MenuWithSubItems) => (
                   <li key={item.title} onMouseEnter={() => handleMouseEnter(item.title)}>
                     <motion.div
@@ -115,7 +116,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
                       <Link
                         href={item.path}
                         prefetch={true}
-                        className="relative inline-block text-lg uppercase tracking-wider"
+                        className="relative inline-block text-base uppercase tracking-normal lg:text-lg lg:tracking-wider"
                       >
                         {item.title}
                         <motion.div
@@ -135,12 +136,13 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
           </div>
           <div className="flex gap-6 md:gap-8">
             <motion.div style={{ color: textColor }} className="flex items-center text-white">
-              <MagnifyingGlassIcon className="h-7 w-7 transition-all ease-in-out hover:scale-110" />
+              <MagnifyingGlassIcon className="h-6 w-6 transition-all ease-in-out hover:scale-110 lg:h-7 lg:w-7" />
             </motion.div>
             <CartModal />
           </div>
         </div>
       </nav>
+      {/* desktop submenu */}
       <AnimatePresence>
         {activeMenu &&
           menuWithSubItems.find((item) => item.title === activeMenu && item.subItems) && (
@@ -179,7 +181,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
                               animate={{ opacity: 1 }}
                               transition={{ duration: 0.3, delay: 0.1 }}
                             >
-                              <h3 className="text-452-blue-light mb-2 text-lg font-bold uppercase tracking-wide">
+                              <h3 className="text-452-blue-light mb-2 text-base font-bold uppercase tracking-wide lg:text-lg">
                                 comprar por {category}
                               </h3>
                               <ul className="flex max-h-[160px] flex-col flex-wrap gap-x-6">
@@ -195,7 +197,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
                                   >
                                     <Link
                                       href={`${item.path}?${category}=${value.replace('"', '').toLocaleLowerCase()}`}
-                                      className="text-452-blue-light hover:text-452-blue-dark ml-2 font-chakra text-lg tracking-wider"
+                                      className="text-452-blue-light hover:text-452-blue-dark ml-2 font-chakra text-base tracking-wider md:text-lg"
                                     >
                                       {value}
                                     </Link>
