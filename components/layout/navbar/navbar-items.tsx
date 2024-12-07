@@ -6,19 +6,13 @@ import MagneticElement from 'components/ctas/magnetic';
 import Logo from 'components/layout/logo/logo';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { menuFilters } from 'lib/constants';
-import { Menu } from 'lib/shopify/types';
+import { Menu, MenuWithSubItems } from 'lib/shopify/types';
 import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
 import MobileMenu from './mobile-menu';
 
 interface NavbarItemsProps {
   menu: Menu[];
-}
-
-interface MenuWithSubItems extends Menu {
-  subItems?: {
-    [key: string]: string[];
-  };
 }
 
 function addSubitems(menu: Menu[]): MenuWithSubItems[] {
@@ -91,7 +85,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
         {/* mobile */}
         <div className="block flex-none md:hidden">
           <Suspense fallback={null}>
-            <MobileMenu menu={menu} />
+            <MobileMenu menu={menuWithSubItems} />
           </Suspense>
         </div>
         {/* desktop */}
@@ -101,7 +95,7 @@ export default function NavbarItems({ menu }: NavbarItemsProps) {
             prefetch={true}
             className="flex w-full items-center justify-center md:w-auto"
           >
-            <Logo size="lg" />
+            <Logo className="-mr-[20px] md:mr-0" size="lg" />
           </Link>
           <div className="hidden py-2 md:flex">
             {menu.length ? (

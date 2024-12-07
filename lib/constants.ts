@@ -63,7 +63,7 @@ export const menuFilters = {
       'Shake Junk',
       'Mob',
       'Jessup',
-      'Negra',
+      'Clásica (Negra)',
       'Transparente'
     ]
   },

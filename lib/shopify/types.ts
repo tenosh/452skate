@@ -52,6 +52,12 @@ export type Menu = {
   path: string;
 };
 
+export interface MenuWithSubItems extends Menu {
+  subItems?: {
+    [key: string]: string[];
+  };
+}
+
 export type Money = {
   amount: string;
   currencyCode: string;

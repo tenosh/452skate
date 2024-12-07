@@ -1,21 +1,28 @@
 'use client';
 
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
+import { Bars4Icon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { MenuWithSubItems } from 'lib/shopify/types';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Fragment, Suspense, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
-import { Bars4Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Menu } from 'lib/shopify/types';
-import Search, { SearchSkeleton } from './search';
-
-export default function MobileMenu({ menu }: { menu: Menu[] }) {
+export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
-  const openMobileMenu = () => setIsOpen(true);
-  const closeMobileMenu = () => setIsOpen(false);
+  // Add state for tracking selected menu item
+  const [selectedMenu, setSelectedMenu] = useState<MenuWithSubItems | null>(null);
+  const openMobileMenu = () => {
+    setSelectedMenu(null);
+    setIsOpen(true);
+  };
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setSelectedMenu(null);
+  };
 
+  // effects
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
@@ -70,26 +77,85 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                 >
                   <XMarkIcon className="h-6" />
                 </button>
-
-                <div className="mb-4 w-full">
-                  <Suspense fallback={<SearchSkeleton />}>
-                    <Search />
-                  </Suspense>
+                <div>
+                  {menu.length ? (
+                    <ul className="flex w-full flex-col">
+                      {menu.map((item: MenuWithSubItems) => (
+                        <li
+                          className="text-452-blue-light flex flex-row justify-around py-2 text-xl transition-colors"
+                          key={item.title}
+                        >
+                          {item.subItems ? (
+                            <button
+                              className="flex w-full flex-row justify-between"
+                              onClick={() => setSelectedMenu(item)}
+                            >
+                              <span>{item.title}</span>
+                              <ChevronRightIcon className="h-6 w-6" />
+                            </button>
+                          ) : (
+                            <Link href={item.path} className="flex w-full flex-row justify-between">
+                              <span>{item.title}</span>
+                            </Link>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </div>
-                {menu.length ? (
-                  <ul className="flex w-full flex-col">
-                    {menu.map((item: Menu) => (
-                      <li
-                        className="text-452-blue-light py-2 text-xl transition-colors"
-                        key={item.title}
-                      >
-                        <Link href={item.path} prefetch={true} onClick={closeMobileMenu}>
-                          {item.title}
+
+                {/* Submenu Panel */}
+                <div
+                  className={`absolute inset-0 h-svh w-svw p-4 ${selectedMenu ? 'translate-x-0' : 'translate-x-[100%]'} bg-white transition-transform duration-300`}
+                >
+                  {selectedMenu && (
+                    <>
+                      {/* header */}
+                      <div className="p-4">
+                        <button
+                          className="text-452-blue-light mb-4 flex items-center"
+                          onClick={() => setSelectedMenu(null)}
+                        >
+                          <ChevronRightIcon className="h-6 w-6 rotate-180" />
+                          <span className="ml-2">Volver a menú</span>
+                        </button>
+                        <h2 className="text-452-blue-light font-oswald text-center text-xl font-bold uppercase">
+                          {selectedMenu.title}
+                        </h2>
+                      </div>
+                      {/* Scrollable content */}
+                      <div className="overflow-y-auto px-4 pb-4">
+                        <Link
+                          href={`/search/${selectedMenu.title.toLocaleLowerCase()}`}
+                          className="text-452-blue-light mb-4 inline-block py-1 text-xl transition-colors"
+                        >
+                          Ver todo en {selectedMenu.title.toLocaleLowerCase()}
                         </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
+                        {Object.entries(selectedMenu.subItems || {}).map(([category, items]) => (
+                          <div key={category} className="mb-4">
+                            <h3 className="text-452-blue-light font-oswald mb-2 text-lg font-semibold uppercase">
+                              comprar por {category}
+                            </h3>
+                            <ul className="flex w-full flex-col">
+                              {items.map((item: string) => (
+                                <li
+                                  key={item}
+                                  className="text-452-blue-light py-1 text-xl transition-colors"
+                                >
+                                  <Link
+                                    href={`/search/${selectedMenu.title.toLocaleLowerCase()}?${category}=${item.replace('"', '').toLocaleLowerCase()}`}
+                                  >
+                                    {item}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </DialogPanel>
           </TransitionChild>

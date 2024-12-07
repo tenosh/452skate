@@ -6,17 +6,22 @@ import secondaryLogo from './secondary-logo.png';
 type Logo = {
   version?: string | undefined;
   size?: string | undefined;
+  className?: string | undefined;
 };
 
-export default function Logo({ version = 'main', size = 'md' }: Logo) {
+export default function Logo({ version = 'main', size = 'md', className }: Logo) {
   return (
     <div
-      className={clsx('flex h-auto items-center justify-center', {
-        'w-6': size === 'sm',
-        'w-14': size === 'md',
-        'w-16': size === 'lg',
-        'w-20': size === 'xl'
-      })}
+      className={clsx(
+        'flex h-auto items-center justify-center',
+        {
+          'w-6': size === 'sm',
+          'w-14': size === 'md',
+          'w-16': size === 'lg',
+          'w-20': size === 'xl'
+        },
+        className
+      )}
     >
       <Image
         src={version === 'secondary' ? secondaryLogo : mainLogo}
