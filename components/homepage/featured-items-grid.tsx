@@ -1,80 +1,89 @@
-import { GridTileImage } from 'components/grid/tile';
-import { getCollectionProducts } from 'lib/shopify';
-import type { Product } from 'lib/shopify/types';
-import Link from 'next/link';
+'use client';
 
-function Item({
-  item,
-  size,
-  priority
-}: {
-  item: Product;
-  size: 'full' | 'half';
-  priority?: boolean;
-}) {
+import { ArrowLongLeftIcon, ArrowLongRightIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import UnderlineLink from 'components/ctas/underline';
+import Price from 'components/price';
+import { Product } from 'lib/shopify/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import 'swiper/css';
+import 'swiper/css/a11y';
+import 'swiper/css/navigation';
+import { A11y, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+export default function FeaturedItems({ products }: { products: Product[] }) {
   return (
-    <div
-      className={size === 'full' ? 'md:col-span-4 md:row-span-2' : 'md:col-span-2 md:row-span-1'}
-    >
-      <Link
-        className="relative block aspect-square h-full w-full"
-        href={`/product/${item.handle}`}
-        prefetch={true}
-      >
-        <GridTileImage
-          src={item.featuredImage.url}
-          fill
-          sizes={
-            size === 'full' ? '(min-width: 768px) 66vw, 100vw' : '(min-width: 768px) 33vw, 100vw'
+    <>
+      <div className="flex flex-col items-center justify-between pb-4 md:flex-row md:pb-8">
+        <h2 className="font-oswald text-3xl font-semibold uppercase text-452-blue-light md:text-5xl">
+          Lo más vendido
+        </h2>
+        <UnderlineLink href="search/" className="text-xl uppercase text-452-blue-light">
+          Ver Todo <ArrowRightIcon className="relative -top-[2px] ml-2 inline-block w-6" />
+        </UnderlineLink>
+      </div>
+      <Swiper
+        className="swiper-container-borders"
+        modules={[Navigation, A11y]}
+        spaceBetween={20}
+        watchSlidesProgress
+        slidesPerView={1.25}
+        breakpoints={{
+          640: {
+            slidesPerView: 2.25
+          },
+          768: {
+            slidesPerView: 3.35
+          },
+          1024: {
+            slidesPerView: 4
           }
-          priority={priority}
-          alt={item.title}
-          label={{
-            position: size === 'full' ? 'center' : 'bottom',
-            title: item.title as string,
-            amount: item.priceRange.maxVariantPrice.amount,
-            currencyCode: item.priceRange.maxVariantPrice.currencyCode
-          }}
-        />
-      </Link>
-    </div>
+        }}
+        navigation={{
+          nextEl: '.custom-button-next',
+          prevEl: '.custom-button-prev'
+        }}
+      >
+        {products.map((product) => (
+          <SwiperSlide className="border-x-2 border-452-blue-light" key={product.handle}>
+            <Link className="block" href={`/product/${product.handle}`} prefetch={true}>
+              <div className="relative aspect-square">
+                <Image
+                  className="object-cover"
+                  src={product.featuredImage.url}
+                  fill
+                  sizes={
+                    '(min-width: 1024px) 25vw, (min-width: 768px) 33.333vw, (min-width: 640px) 50vw, 100vw'
+                  }
+                  priority={true}
+                  alt={product.title}
+                />
+              </div>
+              <div className="flex min-h-[10rem] flex-col gap-4 p-4 font-oswald text-base text-452-blue-light md:min-h-[15rem] md:gap-6 lg:text-2xl">
+                <h3 className="truncate leading-none tracking-wide">{product.title}</h3>
+                <Price
+                  className="flex-none font-chakra"
+                  amount={product.priceRange.maxVariantPrice.amount}
+                  currencyCode={product.priceRange.maxVariantPrice.currencyCode}
+                  currencyCodeClassName="hidden @[275px]/label:inline"
+                />
+              </div>
+            </Link>
+          </SwiperSlide>
+        ))}
+        <div
+          className="absolute bottom-0 z-10 flex w-full flex-row justify-between border-y-2 border-452-blue-light py-2"
+          slot="container-end"
+        >
+          <button className="custom-button-prev ml-2 text-452-blue-light disabled:opacity-50 md:ml-4">
+            <ArrowLongLeftIcon className="w-10" />
+          </button>
+          <button className="custom-button-next mr-2 text-452-blue-light disabled:opacity-50 md:mr-4">
+            <ArrowLongRightIcon className="w-10" />
+          </button>
+        </div>
+      </Swiper>
+    </>
   );
 }
-
-const FeaturedItems = async () => {
-  const homepageItems = await getCollectionProducts({
-    collection: 'hidden-homepage-featured-items'
-  });
-
-  if (!homepageItems[0] || !homepageItems[1] || !homepageItems[2]) return null;
-
-  const [firstProduct, secondProduct, thirdProduct] = homepageItems;
-
-  const menu = Array.from({ length: 3 }, (_, index) => ({
-    id: index + 1,
-    name: `Linea ${index + 1}`,
-    link: `linea/${index + 1}`
-  }));
-  return (
-    <section className="container flex flex-col gap-4 py-4 md:gap-6 md:py-9">
-      <div className="menu-container mb-6 flex flex-row flex-wrap items-center justify-center gap-4 md:gap-8">
-        {menu.map((item) => (
-          <Link
-            key={item.id}
-            href={item.link}
-            className="text-base text-f-orange hover:text-f-orange/80"
-          >
-            {item.name}
-          </Link>
-        ))}
-      </div>
-      <section className="grid max-w-screen-2xl gap-4 pb-4 md:grid-cols-6 md:grid-rows-2 xl:max-h-[calc(100vh-200px)]">
-        <Item size="full" item={firstProduct} priority={true} />
-        <Item size="half" item={secondProduct} priority={true} />
-        <Item size="half" item={thirdProduct} />
-      </section>
-    </section>
-  );
-};
-
-export default FeaturedItems;

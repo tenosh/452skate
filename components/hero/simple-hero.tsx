@@ -15,12 +15,14 @@ export async function SimpleHero() {
           priority={true}
         />
       </div>
-      <div className="absolute bottom-8 left-8 z-10 flex max-w-[90%] flex-col gap-4 md:max-w-[500px]">
-        <h1 className="font-oswald mb-5 text-3xl font-semibold uppercase leading-9 tracking-wide text-white md:text-5xl md:leading-[1.2]">
-          Conectando lo mejor del skate en México
-        </h1>
-        <div>
-          <MainCta href="/search">Ver todos los productos</MainCta>
+      <div className="relative mx-auto w-full max-w-[1920px]">
+        <div className="absolute bottom-8 left-8 z-10 flex max-w-[90%] flex-col gap-4 md:max-w-[500px]">
+          <h1 className="mb-5 font-oswald text-3xl font-semibold uppercase leading-9 tracking-wide text-white md:text-5xl md:leading-[1.2]">
+            Conectando lo mejor del skate en México
+          </h1>
+          <div>
+            <MainCta href="/search">Ver todos los productos</MainCta>
+          </div>
         </div>
       </div>
     </section>

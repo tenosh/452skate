@@ -34,3 +34,27 @@
     transform: translateX(-50%);
   }
 }
+
+
+.swiper-container-borders {
+  position: relative;
+}
+
+.swiper-container-borders::before,
+.swiper-container-borders::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  height: 100%;
+  width: 3px;
+  background-color: white;
+}
+
+.swiper-container-borders::before {
+  left: 0;
+}
+
+.swiper-container-borders::after {
+  right: 0;
+}

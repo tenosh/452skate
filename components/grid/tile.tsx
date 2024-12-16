@@ -21,7 +21,7 @@ export function GridTileImage({
     <div
       className={clsx('group flex h-full w-full items-center justify-center overflow-hidden', {
         relative: label,
-        'border-2 border-f-orange': active,
+        'border-f-orange border-2': active,
         'border-neutral-200': !active
       })}
     >

@@ -1,25 +1,26 @@
 import { SimpleHero } from 'components/hero/simple-hero';
 import FeaturedItems from 'components/homepage/featured-items-grid';
+import { getCollectionProducts } from 'lib/shopify';
 
 export const metadata = {
-  description: 'Moda Alternativa.',
+  description: 'cuatro 52 skateshop',
   openGraph: {
     type: 'website'
   }
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredProducts = await getCollectionProducts({
+    collection: 'hidden-productos-destacados'
+  });
   return (
     <>
-      <div className="w-full bg-f-green">
+      <div className="w-full">
         <SimpleHero />
       </div>
-      <div className="w-full bg-f-green-light">
-        <FeaturedItems />
+      <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
+        <FeaturedItems products={featuredProducts} />
       </div>
-      {/* <div className="w-full bg-f-green-light">
-        <Ticker text="Breaking news: This ticker now loops continuously without ever stopping!" />
-      </div> */}
       {/* <Footer /> */}
     </>
   );
