@@ -16,15 +16,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function FeaturedItems({ products }: { products: Product[] }) {
   const [isLoading, setIsLoading] = useState(true);
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
 
   const slideVariants = {
     hidden: {
@@ -44,7 +35,7 @@ export default function FeaturedItems({ products }: { products: Product[] }) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between pb-4 md:flex-row md:pb-8">
+      <div className="mb-6 flex flex-col items-start justify-between gap-3 md:mb-8 md:flex-row md:items-center">
         <h2 className="font-oswald text-3xl font-semibold uppercase text-452-blue-light md:text-5xl">
           Lo más vendido
         </h2>
@@ -99,7 +90,8 @@ export default function FeaturedItems({ products }: { products: Product[] }) {
               <motion.div
                 custom={index}
                 initial="hidden"
-                animate="visible"
+                whileInView="visible"
+                viewport={{ once: true }}
                 variants={slideVariants}
               >
                 <Link
@@ -116,6 +108,11 @@ export default function FeaturedItems({ products }: { products: Product[] }) {
                       priority={true}
                       alt={product.title}
                     />
+                    {product.tags?.includes('nuevo') && (
+                      <div className="absolute left-4 top-4 z-10 rounded-full bg-452-blue-light px-4 py-2 font-chakra text-sm uppercase leading-none text-white">
+                        Producto Nuevo
+                      </div>
+                    )}
                   </div>
                   <div className="flex min-h-[10rem] flex-col gap-4 p-4 font-oswald text-base text-452-blue-light md:min-h-[15rem] md:gap-6 lg:text-2xl">
                     <h3 className="truncate leading-none tracking-wide">{product.title}</h3>

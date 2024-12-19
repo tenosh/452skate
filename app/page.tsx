@@ -1,5 +1,6 @@
 import { SimpleHero } from 'components/hero/simple-hero';
 import FeaturedItems from 'components/homepage/featured-items-grid';
+import PromotionSection from 'components/homepage/promotion-section';
 import { getCollectionProducts } from 'lib/shopify';
 
 export const metadata = {
@@ -20,6 +21,9 @@ export default async function HomePage() {
       </div>
       <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
         <FeaturedItems products={featuredProducts} />
+      </div>
+      <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
+        <PromotionSection />
       </div>
       {/* <Footer /> */}
     </>

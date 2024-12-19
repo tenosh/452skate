@@ -1,6 +1,6 @@
 import MainCta from 'components/ctas/main';
 import Image from 'next/image';
-import simpleHeroImg from './main-banner.jpg';
+import simpleHeroImg from '../../images/banners/main-banner.jpg';
 
 export async function SimpleHero() {
   return (
