@@ -107,7 +107,9 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
 
                 {/* Submenu Panel */}
                 <div
-                  className={`absolute inset-0 h-svh w-svw p-4 ${selectedMenu ? 'translate-x-0' : 'translate-x-[100%]'} bg-white transition-transform duration-300`}
+                  className={`absolute inset-0 flex h-full w-full flex-col bg-white p-4 ${
+                    selectedMenu ? 'translate-x-0' : 'translate-x-[100%]'
+                  } transition-transform duration-300`}
                 >
                   {selectedMenu && (
                     <>
@@ -125,7 +127,7 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
                         </h2>
                       </div>
                       {/* Scrollable content */}
-                      <div className="overflow-y-auto px-4 pb-4">
+                      <div className="flex-1 overflow-y-auto px-4 pb-4">
                         <Link
                           href={`/search/${selectedMenu.title.toLocaleLowerCase()}`}
                           className="mb-4 inline-block py-1 text-xl text-452-blue-light transition-colors"
