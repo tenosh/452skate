@@ -2,6 +2,7 @@
 
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import { Bars4Icon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import AnimatedIcon from 'components/icons/color-change-icon';
 import { MenuWithSubItems } from 'lib/shopify/types';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -42,9 +43,9 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
       <button
         onClick={openMobileMenu}
         aria-label="Abrir el menu movil"
-        className="flex items-center justify-center text-white transition-colors md:hidden"
+        className="flex h-8 items-center justify-center text-white transition-colors md:hidden"
       >
-        <Bars4Icon className="h-8" />
+        <AnimatedIcon icon={<Bars4Icon className="h-full w-full transition-all ease-in-out" />} />
       </button>
       <Transition show={isOpen}>
         <Dialog onClose={closeMobileMenu} className="relative z-50">
@@ -71,7 +72,7 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
             <DialogPanel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-white pb-6">
               <div className="p-4">
                 <button
-                  className="border-452-blue-light text-452-blue-light mb-4 ml-auto flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
+                  className="mb-4 ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-452-blue-light text-452-blue-light transition-colors"
                   onClick={closeMobileMenu}
                   aria-label="Cerrar menu"
                 >
@@ -82,7 +83,7 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
                     <ul className="flex w-full flex-col">
                       {menu.map((item: MenuWithSubItems) => (
                         <li
-                          className="text-452-blue-light flex flex-row justify-around py-2 text-xl transition-colors"
+                          className="flex flex-row justify-around py-2 text-xl text-452-blue-light transition-colors"
                           key={item.title}
                         >
                           {item.subItems ? (
@@ -113,13 +114,13 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
                       {/* header */}
                       <div className="p-4">
                         <button
-                          className="text-452-blue-light mb-4 flex items-center"
+                          className="mb-4 flex items-center text-452-blue-light"
                           onClick={() => setSelectedMenu(null)}
                         >
                           <ChevronRightIcon className="h-6 w-6 rotate-180" />
                           <span className="ml-2">Volver a menú</span>
                         </button>
-                        <h2 className="text-452-blue-light font-oswald text-center text-xl font-bold uppercase">
+                        <h2 className="text-center font-oswald text-xl font-bold uppercase text-452-blue-light">
                           {selectedMenu.title}
                         </h2>
                       </div>
@@ -127,20 +128,20 @@ export default function MobileMenu({ menu }: { menu: MenuWithSubItems[] }) {
                       <div className="overflow-y-auto px-4 pb-4">
                         <Link
                           href={`/search/${selectedMenu.title.toLocaleLowerCase()}`}
-                          className="text-452-blue-light mb-4 inline-block py-1 text-xl transition-colors"
+                          className="mb-4 inline-block py-1 text-xl text-452-blue-light transition-colors"
                         >
                           Ver todo en {selectedMenu.title.toLocaleLowerCase()}
                         </Link>
                         {Object.entries(selectedMenu.subItems || {}).map(([category, items]) => (
                           <div key={category} className="mb-4">
-                            <h3 className="text-452-blue-light font-oswald mb-2 text-lg font-semibold uppercase">
+                            <h3 className="mb-2 font-oswald text-lg font-semibold uppercase text-452-blue-light">
                               comprar por {category}
                             </h3>
                             <ul className="flex w-full flex-col">
                               {items.map((item: string) => (
                                 <li
                                   key={item}
-                                  className="text-452-blue-light py-1 text-xl transition-colors"
+                                  className="py-1 text-xl text-452-blue-light transition-colors"
                                 >
                                   <Link
                                     href={`/search/${selectedMenu.title.toLocaleLowerCase()}?${category}=${item.replace('"', '').toLocaleLowerCase()}`}

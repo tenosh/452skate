@@ -4,7 +4,7 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/re
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import LoadingDots from 'components/loading-dots';
 import Price from 'components/price';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useScroll } from 'framer-motion';
 import { DEFAULT_OPTION } from 'lib/constants';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
@@ -30,12 +30,6 @@ export default function CartModal() {
   const closeCart = () => setIsOpen(false);
   const { scrollY } = useScroll();
 
-  const textColor = useTransform(
-    scrollY,
-    [0, 100],
-    ['rgb(255, 255, 255)', 'rgb(73, 136, 189)'] // white to 452-blue-light
-  );
-
   useEffect(() => {
     if (!cart) {
       createCartAndSetCookie();
@@ -57,14 +51,14 @@ export default function CartModal() {
 
   return (
     <>
-      <motion.button
+      <button
         aria-label="Abrir carrito de compras"
         onClick={openCart}
         className="text-whiteflex items-center"
-        style={{ color: textColor }}
       >
         <OpenCart quantity={cart?.totalQuantity} />
-      </motion.button>
+      </button>
+
       <Transition show={isOpen}>
         <Dialog onClose={closeCart} className="relative z-50">
           <TransitionChild
@@ -87,7 +81,7 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <DialogPanel className="border-452-blue-light fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l bg-white p-6 backdrop-blur-3xl md:w-[390px]">
+            <DialogPanel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-452-blue-light bg-white p-6 backdrop-blur-3xl md:w-[390px]">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">Bolso de compras</p>
                 <button aria-label="Cerrar carrito de compras" onClick={closeCart}>
