@@ -1,7 +1,9 @@
 import { SimpleHero } from 'components/hero/simple-hero';
 import FeaturedItems from 'components/homepage/featured-items-grid';
+import PoliciesSection from 'components/homepage/policies-section';
 import PromotionSection from 'components/homepage/promotion-section';
 import ScrollableImageGrid from 'components/homepage/scrollable-image-grid';
+import SectionContainer from 'components/layout/section-container';
 import { getCollection, getCollectionProducts } from 'lib/shopify';
 
 export const metadata = {
@@ -49,22 +51,25 @@ export default async function HomePage() {
       <div className="w-full">
         <SimpleHero />
       </div>
-      <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
+      <SectionContainer>
         <FeaturedItems products={featuredProducts} title="Lo más Vendido" linkHref="/search" />
-      </div>
-      <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
+      </SectionContainer>
+      <SectionContainer>
         <PromotionSection />
-      </div>
-      <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
+      </SectionContainer>
+      <SectionContainer>
         <ScrollableImageGrid items={gridItems} />
-      </div>
-      <div className="mx-auto w-full max-w-[1920px] px-4 py-6 md:py-12">
+      </SectionContainer>
+      <SectionContainer>
         <FeaturedItems
           products={featuredProducts}
           title="Lo más Nuevo"
           linkHref="/collections/lo-nuevo"
         />
-      </div>
+      </SectionContainer>
+      <SectionContainer>
+        <PoliciesSection />
+      </SectionContainer>
       {/* <Footer /> */}
     </>
   );

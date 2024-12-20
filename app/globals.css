@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background-color: #4988bd;
+  color: white;
+}
+
+::-moz-selection {
+  background-color: #4988bd;
+  color: white;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -14,35 +24,13 @@
   }
 }
 
-/* ticker */
-
-.ticker-content {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: ticker 60s linear infinite;
-}
-
-.ticker-item {
-  flex: 0 0 auto;
-}
-
-@keyframes ticker {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-
 .swiper-container-borders {
   position: relative;
 }
 
 .swiper-container-borders::before,
 .swiper-container-borders::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   z-index: 2;
