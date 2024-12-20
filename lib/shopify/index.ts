@@ -320,8 +320,6 @@ export async function getProductTags(): Promise<string[]> {
     tags: [TAGS.products]
   });
 
-  debugger;
-
   if (!res.body.data.productTags) {
     console.log(`No tags found`);
     return [];
@@ -339,6 +337,12 @@ export async function getCollections(): Promise<Collection[]> {
   const collections = [
     {
       handle: '',
+      image: {
+        url: '',
+        altText: '',
+        width: 0,
+        height: 0
+      },
       title: 'All',
       description: 'All products',
       seo: {

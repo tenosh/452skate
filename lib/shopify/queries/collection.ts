@@ -3,6 +3,12 @@ import seoFragment from '../fragments/seo';
 
 const collectionFragment = /* GraphQL */ `
   fragment collection on Collection {
+    image {
+      url
+      altText
+      width
+      height
+    }
     handle
     title
     description

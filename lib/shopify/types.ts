@@ -115,6 +115,7 @@ export type ShopifyCart = {
 
 export type ShopifyCollection = {
   handle: string;
+  image: Image;
   title: string;
   description: string;
   seo: SEO;
