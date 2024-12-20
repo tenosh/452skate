@@ -24,7 +24,7 @@ export default function PromotionSection() {
       <div className="absolute inset-0 flex items-center">
         <div className="flex w-full justify-center px-4 md:justify-start md:pl-16 lg:pl-24">
           <div className="max-w-md text-center">
-            <h3 className="mb-4 font-oswald text-3xl font-bold uppercase tracking-wider text-white md:mb-8 md:text-5xl">
+            <h3 className="mb-8 font-oswald text-3xl font-bold uppercase tracking-wider text-white md:mb-12 md:text-5xl">
               {title.map((word, i) => (
                 <motion.span
                   key={i}
@@ -42,7 +42,7 @@ export default function PromotionSection() {
                 </motion.span>
               ))}
             </h3>
-            <p className="mb-4 bg-452-blue-light text-base md:mb-8 md:text-lg">
+            <p className="mb-8 bg-452-blue-light text-base md:mb-12 md:text-lg">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. numquam earum reprehenderit?
             </p>
             <MainCta href="/search">Promotion cta link</MainCta>

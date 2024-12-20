@@ -3,9 +3,12 @@
 import MainCta from 'components/ctas/main';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import simpleHeroImg from '../../images/banners/main-banner.jpg';
 
-export function SimpleHero() {
+interface SimpleHeroProps {
+  imagePath: string;
+}
+
+export function SimpleHero({ imagePath }: SimpleHeroProps) {
   const headingText = 'Conectando lo mejor del skate en México'.split(' ');
 
   return (
@@ -21,7 +24,7 @@ export function SimpleHero() {
           <Image
             className="h-full w-full object-cover"
             alt="Cuatro 52 skateshop"
-            src={simpleHeroImg}
+            src={imagePath}
             width={2800}
             height={1717}
             priority={true}

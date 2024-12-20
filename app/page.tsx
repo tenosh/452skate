@@ -3,8 +3,9 @@ import FeaturedItems from 'components/homepage/featured-items-grid';
 import PoliciesSection from 'components/homepage/policies-section';
 import PromotionSection from 'components/homepage/promotion-section';
 import ScrollableImageGrid from 'components/homepage/scrollable-image-grid';
+import Footer from 'components/layout/footer';
 import SectionContainer from 'components/layout/section-container';
-import { getCollection, getCollectionProducts } from 'lib/shopify';
+import { getCollection, getCollectionProducts, getPage } from 'lib/shopify';
 
 export const metadata = {
   description: 'cuatro 52 skateshop',
@@ -14,6 +15,17 @@ export const metadata = {
 };
 
 export default async function HomePage() {
+  //get homepage metadata
+  const pageData = await getPage('homepage');
+
+  // Extract image URLs from metafields
+  const footerMenuImage =
+    pageData?.metafields?.find((field) => field.key === 'imagen_de_menu_de_pie')?.reference?.image
+      ?.url || '';
+  const heroImage =
+    pageData?.metafields?.find((field) => field.key === 'imagen_de_portada')?.reference?.image
+      ?.url || '';
+
   const featuredProducts = await getCollectionProducts({
     collection: 'hidden-productos-destacados'
   });
@@ -49,7 +61,7 @@ export default async function HomePage() {
   return (
     <>
       <div className="w-full">
-        <SimpleHero />
+        <SimpleHero imagePath={heroImage} />
       </div>
       <SectionContainer>
         <FeaturedItems products={featuredProducts} title="Lo más Vendido" linkHref="/search" />
@@ -70,7 +82,9 @@ export default async function HomePage() {
       <SectionContainer>
         <PoliciesSection />
       </SectionContainer>
-      {/* <Footer /> */}
+      <div className="w-full">
+        <Footer imagePath={footerMenuImage} />
+      </div>
     </>
   );
 }

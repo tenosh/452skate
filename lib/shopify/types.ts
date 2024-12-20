@@ -63,6 +63,19 @@ export type Money = {
   currencyCode: string;
 };
 
+export type PageMetafield = {
+  key: string;
+  reference?: {
+    id: string;
+    image: {
+      url: string;
+      width: number;
+      height: number;
+      altText: string;
+    };
+  };
+};
+
 export type Page = {
   id: string;
   title: string;
@@ -72,6 +85,7 @@ export type Page = {
   seo?: SEO;
   createdAt: string;
   updatedAt: string;
+  metafields: PageMetafield[];
 };
 
 export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {

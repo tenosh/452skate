@@ -8,6 +8,25 @@ const pageFragment = /* GraphQL */ `
       handle
       body
       bodySummary
+      metafields(
+        identifiers: [
+          { namespace: "custom", key: "imagen_de_menu_de_pie" }
+          { namespace: "custom", key: "imagen_de_portada" }
+        ]
+      ) {
+        key
+        reference {
+          ... on MediaImage {
+            id
+            image {
+              url
+              width
+              height
+              altText
+            }
+          }
+        }
+      }
       seo {
         ...seo
       }

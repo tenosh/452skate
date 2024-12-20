@@ -18,7 +18,8 @@ export default function Logo({ version = 'main', size = 'md', className }: Logo)
           'w-6': size === 'sm',
           'w-14': size === 'md',
           'w-16': size === 'lg',
-          'w-20': size === 'xl'
+          'w-20': size === 'xl',
+          'w-full': size === 'full'
         },
         className
       )}
