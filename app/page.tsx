@@ -30,6 +30,10 @@ export default async function HomePage() {
     collection: 'hidden-productos-destacados'
   });
 
+  const newProducts = await getCollectionProducts({
+    collection: 'hidden-productos-nuevos'
+  });
+
   // Fetch all collections in parallel
   const [tablasCollection, trucksCollection, llantasCollection] = await Promise.all([
     getCollection('tablas'),
@@ -74,7 +78,7 @@ export default async function HomePage() {
       </SectionContainer>
       <SectionContainer>
         <FeaturedItems
-          products={featuredProducts}
+          products={newProducts}
           title="Lo más Nuevo"
           linkHref="/collections/lo-nuevo"
         />
