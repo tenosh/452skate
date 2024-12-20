@@ -8,7 +8,7 @@ import { Suspense } from 'react';
 
 const { SITE_NAME } = process.env;
 
-export default async function Footer({ imagePath }: { imagePath: string }) {
+export default async function Footer({ imagePath }: { imagePath?: string }) {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
   const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700';
@@ -19,14 +19,18 @@ export default async function Footer({ imagePath }: { imagePath: string }) {
   return (
     <footer className="relative mt-6 px-4 pt-10 md:pt-20">
       <div className="absolute inset-0 z-0 h-full w-full">
-        <Image
-          src={imagePath}
-          alt="452 skateshop"
-          fill
-          className="object-cover"
-          priority={false}
-          quality={75}
-        />
+        {imagePath ? (
+          <Image
+            src={imagePath}
+            alt="cutrao 52 skateshop"
+            fill
+            className="object-cover"
+            priority={false}
+            quality={75}
+          />
+        ) : (
+          <div className="h-full w-full bg-white" />
+        )}
       </div>
       <div className="relative z-10">
         <Link className="flex justify-start border-b-2 border-b-452-gray-light pb-4" href="/">
