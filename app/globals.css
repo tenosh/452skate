@@ -50,3 +50,15 @@
 .thumbs-swiper .swiper-slide-thumb-active {
   @apply border-2 border-452-blue-light;
 }
+
+.pswp {
+  --pswp-bg: #000000;
+  --pswp-placeholder-bg: #222;
+
+  position: fixed;
+  z-index: 9999;
+}
+
+.pswp__img {
+  object-fit: contain;
+}

@@ -3,7 +3,9 @@
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Image as ImageType } from 'lib/shopify/types';
 import Image from 'next/image';
-import { useState } from 'react';
+import PhotoSwipe from 'photoswipe';
+import 'photoswipe/dist/photoswipe.css';
+import { useEffect, useMemo, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/a11y';
@@ -15,7 +17,74 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function SwiperGallery({ images }: { images: ImageType[] }) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+  const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [lightbox, setLightbox] = useState<PhotoSwipe | null>(null);
+  const [pswpModule, setPswpModule] = useState<any>(null);
+
+  const photoSwipeItems = useMemo(() => {
+    return images.map((image) => ({
+      src: image.url,
+      w: image.width || 1200, // fallback if width not available
+      h: image.height || 800, // fallback if height not available
+      alt: image.altText
+    }));
+  }, [images]);
+
+  useEffect(() => {
+    // Load PhotoSwipe module once
+    import('photoswipe').then((module) => {
+      setPswpModule(module);
+    });
+  }, []);
+
+  useEffect(() => {
+    // Initialize PhotoSwipe
+    const initPhotoSwipe = async () => {
+      const lightbox = new PhotoSwipe({
+        dataSource: photoSwipeItems,
+        pswpModule: () => import('photoswipe')
+      });
+
+      // Add change event listener to sync with Swiper
+      lightbox.on('change', () => {
+        if (mainSwiper) {
+          mainSwiper.slideTo(lightbox.currIndex);
+        }
+      });
+
+      setLightbox(lightbox);
+    };
+
+    initPhotoSwipe();
+    console.log('lightbox dude');
+
+    return () => {
+      if (lightbox) {
+        lightbox.destroy();
+      }
+    };
+  }, [images, photoSwipeItems, mainSwiper]);
+
+  const openPhotoSwipe = async (index: number) => {
+    if (!pswpModule) return;
+
+    const lightbox = new PhotoSwipe({
+      dataSource: photoSwipeItems,
+      index: index,
+      pswpModule: pswpModule
+    });
+
+    lightbox.init();
+
+    lightbox.on('change', () => {
+      if (mainSwiper) {
+        mainSwiper.slideTo(lightbox.currIndex);
+      }
+    });
+
+    setLightbox(lightbox);
+  };
 
   return (
     <>
@@ -50,6 +119,7 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
 
       <div className={`${isLoading ? 'hidden' : 'block'}`}>
         <Swiper
+          onSwiper={setMainSwiper}
           spaceBetween={10}
           thumbs={{ swiper: thumbsSwiper }}
           modules={[FreeMode, Navigation, Thumbs]}
@@ -66,7 +136,10 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="relative aspect-square">
+              <div
+                className="relative aspect-square cursor-zoom-in"
+                onClick={() => openPhotoSwipe(index)}
+              >
                 <Image
                   className="object-cover"
                   src={image.url}
