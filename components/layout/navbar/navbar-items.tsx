@@ -44,14 +44,25 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
   const isHomePage = pathname === '/';
 
   const { scrollY } = useScroll();
+  // Move useTransform hooks outside of conditional logic
+  const bgTransform = useTransform(
+    scrollY,
+    [99, 100],
+    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']
+  );
+  const textTransform = useTransform(
+    scrollY,
+    [99, 100],
+    ['rgb(255, 255, 255)', 'rgb(73, 136, 189)']
+  );
+
+  // Use the transformed values based on conditions
   const backgroundColor =
-    skipScrollAnimation || !isHomePage
-      ? 'rgba(255, 255, 255, 1)'
-      : useTransform(scrollY, [99, 100], ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']);
+    skipScrollAnimation || !isHomePage ? 'rgba(255, 255, 255, 1)' : bgTransform;
   const textColor =
     skipScrollAnimation || !isHomePage
       ? 'rgb(73, 136, 189)' // 452-blue-light
-      : useTransform(scrollY, [99, 100], ['rgb(255, 255, 255)', 'rgb(73, 136, 189)']);
+      : textTransform;
 
   // local helpers
   const handleMouseEnter = (title: string) => {
