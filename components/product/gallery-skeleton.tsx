@@ -2,7 +2,7 @@ export default function GallerySkeleton() {
   return (
     <div className="space-y-4">
       {/* Main image skeleton */}
-      <div className="relative aspect-square h-full max-h-[550px] w-full animate-pulse bg-gray-200" />
+      <div className="relative aspect-square h-full w-full animate-pulse bg-gray-200" />
 
       {/* Blue divider */}
       <div className="h-[2px] w-full bg-452-blue-light" />
