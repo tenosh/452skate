@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 interface AnimatedIconProps {
   icon: React.ReactNode;
@@ -13,8 +14,14 @@ export default function AnimatedIcon({
   initialColor = 'rgb(255, 255, 255)', // white
   scrollColor = 'rgb(73, 136, 189)' // 452-blue-light
 }: AnimatedIconProps) {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
   const { scrollY } = useScroll();
-  const textColor = useTransform(scrollY, [99, 100], [initialColor, scrollColor]);
+  const textColor = useTransform(
+    scrollY,
+    [99, 100],
+    isHomePage ? [initialColor, scrollColor] : [scrollColor, scrollColor]
+  );
 
   return (
     <motion.div style={{ color: textColor }} className="flex items-center">

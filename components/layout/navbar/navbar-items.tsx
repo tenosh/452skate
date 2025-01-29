@@ -14,6 +14,7 @@ import MobileMenu from './mobile-menu';
 
 interface NavbarItemsProps {
   menu: Menu[];
+  skipScrollAnimation?: boolean;
 }
 
 function addSubitems(menu: Menu[]): MenuWithSubItems[] {
@@ -34,22 +35,18 @@ function addSubitems(menu: Menu[]): MenuWithSubItems[] {
   });
 }
 
-export default function NavbarItems({ menu }: NavbarItemsProps) {
+export default function NavbarItems({ menu, skipScrollAnimation = false }: NavbarItemsProps) {
   const menuWithSubItems = addSubitems(menu);
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const { scrollY } = useScroll();
-  const backgroundColor = useTransform(
-    scrollY,
-    [99, 100],
-    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']
-  );
-  const textColor = useTransform(
-    scrollY,
-    [99, 100],
-    ['rgb(255, 255, 255)', 'rgb(73, 136, 189)'] // white to 452-blue-light
-  );
+  const backgroundColor = skipScrollAnimation
+    ? 'rgba(255, 255, 255, 1)'
+    : useTransform(scrollY, [99, 100], ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']);
+  const textColor = skipScrollAnimation
+    ? 'rgb(73, 136, 189)' // 452-blue-light
+    : useTransform(scrollY, [99, 100], ['rgb(255, 255, 255)', 'rgb(73, 136, 189)']);
 
   // local helpers
   const handleMouseEnter = (title: string) => {

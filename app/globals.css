@@ -46,3 +46,7 @@
 .swiper-container-borders::after {
   right: 0;
 }
+
+.thumbs-swiper .swiper-slide-thumb-active {
+  @apply border-2 border-452-blue-light;
+}
