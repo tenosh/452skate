@@ -19,14 +19,13 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [lightbox, setLightbox] = useState<PhotoSwipe | null>(null);
   const [pswpModule, setPswpModule] = useState<any>(null);
 
   const photoSwipeItems = useMemo(() => {
     return images.map((image) => ({
       src: image.url,
-      w: image.width || 1200, // fallback if width not available
-      h: image.height || 800, // fallback if height not available
+      w: image.width || 1800,
+      h: image.height || 1800,
       alt: image.altText
     }));
   }, [images]);
@@ -38,35 +37,7 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
     });
   }, []);
 
-  useEffect(() => {
-    // Initialize PhotoSwipe
-    const initPhotoSwipe = async () => {
-      const lightbox = new PhotoSwipe({
-        dataSource: photoSwipeItems,
-        pswpModule: () => import('photoswipe')
-      });
-
-      // Add change event listener to sync with Swiper
-      lightbox.on('change', () => {
-        if (mainSwiper) {
-          mainSwiper.slideTo(lightbox.currIndex);
-        }
-      });
-
-      setLightbox(lightbox);
-    };
-
-    initPhotoSwipe();
-    console.log('lightbox dude');
-
-    return () => {
-      if (lightbox) {
-        lightbox.destroy();
-      }
-    };
-  }, [images, photoSwipeItems, mainSwiper]);
-
-  const openPhotoSwipe = async (index: number) => {
+  const openPhotoSwipe = (index: number) => {
     if (!pswpModule) return;
 
     const lightbox = new PhotoSwipe({
@@ -82,8 +53,6 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
         mainSwiper.slideTo(lightbox.currIndex);
       }
     });
-
-    setLightbox(lightbox);
   };
 
   return (
