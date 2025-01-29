@@ -1,6 +1,11 @@
 'use client';
 
-import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
+} from '@heroicons/react/24/outline';
 import { Image as ImageType } from 'lib/shopify/types';
 import Image from 'next/image';
 import PhotoSwipe from 'photoswipe';
@@ -20,6 +25,8 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [pswpModule, setPswpModule] = useState<any>(null);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   const photoSwipeItems = useMemo(() => {
     return images.map((image) => ({
@@ -55,6 +62,18 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
     });
   };
 
+  const slideNext = () => {
+    if (mainSwiper) {
+      mainSwiper.slideNext();
+    }
+  };
+
+  const slidePrev = () => {
+    if (mainSwiper) {
+      mainSwiper.slidePrev();
+    }
+  };
+
   return (
     <>
       {isLoading && (
@@ -87,40 +106,66 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
       )}
 
       <div className={`${isLoading ? 'hidden' : 'block'}`}>
-        <Swiper
-          onSwiper={setMainSwiper}
-          spaceBetween={10}
-          thumbs={{ swiper: thumbsSwiper }}
-          modules={[FreeMode, Navigation, Thumbs]}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 1.25 },
-            768: { slidesPerView: 1 }
-          }}
-          navigation={{
-            nextEl: '.custom-button-next',
-            prevEl: '.custom-button-prev'
-          }}
-          onInit={() => setIsLoading(false)}
-        >
-          {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className="relative aspect-square cursor-zoom-in"
-                onClick={() => openPhotoSwipe(index)}
-              >
-                <Image
-                  className="object-cover"
-                  src={image.url}
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  priority={true}
-                  alt={image.altText}
-                />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="relative">
+          <Swiper
+            onSwiper={setMainSwiper}
+            spaceBetween={10}
+            thumbs={{ swiper: thumbsSwiper }}
+            modules={[FreeMode, Navigation, Thumbs]}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 1.25 },
+              768: { slidesPerView: 1 }
+            }}
+            navigation={{
+              nextEl: '.custom-button-next',
+              prevEl: '.custom-button-prev'
+            }}
+            onInit={() => setIsLoading(false)}
+            onSlideChange={(swiper) => {
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  className="relative aspect-square cursor-zoom-in"
+                  onClick={() => openPhotoSwipe(index)}
+                >
+                  <Image
+                    className="object-cover"
+                    src={image.url}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    priority={true}
+                    alt={image.altText}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <button
+            onClick={slidePrev}
+            className={`absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md transition-opacity md:block ${
+              isBeginning ? 'cursor-not-allowed opacity-50' : 'opacity-100 hover:bg-gray-100'
+            }`}
+            disabled={isBeginning}
+          >
+            <ChevronLeftIcon className="h-6 w-6 text-452-blue-light" />
+          </button>
+
+          <button
+            onClick={slideNext}
+            className={`absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md transition-opacity md:block ${
+              isEnd ? 'cursor-not-allowed opacity-50' : 'opacity-100 hover:bg-gray-100'
+            }`}
+            disabled={isEnd}
+          >
+            <ChevronRightIcon className="h-6 w-6 text-452-blue-light" />
+          </button>
+        </div>
         <div className="my-4 h-[2px] w-full bg-452-blue-light"></div>
         <Swiper
           onSwiper={setThumbsSwiper}
