@@ -3,8 +3,8 @@ import NavbarItems from './navbar-items';
 
 const { SITE_NAME } = process.env;
 
-export async function Navbar({ skipScrollAnimation }: { skipScrollAnimation?: boolean }) {
+export async function Navbar() {
   const menu = await getMenu('main-menu');
 
-  return <NavbarItems menu={menu} skipScrollAnimation={skipScrollAnimation} />;
+  return <NavbarItems menu={menu} />;
 }

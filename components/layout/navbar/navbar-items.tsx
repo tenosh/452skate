@@ -9,6 +9,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { menuFilters } from 'lib/constants';
 import { Menu, MenuWithSubItems } from 'lib/shopify/types';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import MobileMenu from './mobile-menu';
 
@@ -39,14 +40,18 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
   const menuWithSubItems = addSubitems(menu);
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   const { scrollY } = useScroll();
-  const backgroundColor = skipScrollAnimation
-    ? 'rgba(255, 255, 255, 1)'
-    : useTransform(scrollY, [99, 100], ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']);
-  const textColor = skipScrollAnimation
-    ? 'rgb(73, 136, 189)' // 452-blue-light
-    : useTransform(scrollY, [99, 100], ['rgb(255, 255, 255)', 'rgb(73, 136, 189)']);
+  const backgroundColor =
+    skipScrollAnimation || !isHomePage
+      ? 'rgba(255, 255, 255, 1)'
+      : useTransform(scrollY, [99, 100], ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']);
+  const textColor =
+    skipScrollAnimation || !isHomePage
+      ? 'rgb(73, 136, 189)' // 452-blue-light
+      : useTransform(scrollY, [99, 100], ['rgb(255, 255, 255)', 'rgb(73, 136, 189)']);
 
   // local helpers
   const handleMouseEnter = (title: string) => {

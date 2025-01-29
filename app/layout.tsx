@@ -4,7 +4,7 @@ import { WelcomeToast } from 'components/welcome-toast';
 import { getCart } from 'lib/shopify';
 import { ensureStartsWith } from 'lib/utils';
 import { Chakra_Petch, Honk, Oswald } from 'next/font/google';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import './globals.css';
@@ -59,10 +59,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const cartId = (await cookies()).get('cartId')?.value;
   // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart(cartId);
-  // Get the current pathname from headers
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '';
-  const isHomePage = pathname === '/';
   return (
     <html
       lang="en"
@@ -70,7 +66,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     >
       <body className="text-f-green-light selection:bg-f-orange bg-white">
         <CartProvider cartPromise={cart}>
-          <Navbar skipScrollAnimation={!isHomePage} />
+          <Navbar />
           <main>
             {children}
             <Toaster closeButton />

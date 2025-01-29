@@ -19,6 +19,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import GallerySkeleton from './gallery-skeleton';
 
 export default function SwiperGallery({ images }: { images: ImageType[] }) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
@@ -76,34 +77,7 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
 
   return (
     <>
-      {isLoading && (
-        <div className="space-y-4">
-          {/* Main image skeleton */}
-          <div className="relative aspect-square w-full animate-pulse bg-gray-200" />
-
-          <div className="h-[2px] w-full bg-452-blue-light" />
-
-          {/* Thumbnails skeleton */}
-          <div className="grid grid-cols-4 gap-1 sm:grid-cols-6 lg:grid-cols-8">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className={`aspect-square animate-pulse bg-gray-200 ${i >= 4 ? 'hidden sm:block' : ''} ${i >= 6 ? 'hidden lg:block' : ''}`}
-              />
-            ))}
-          </div>
-
-          {/* Navigation buttons skeleton */}
-          <div className="mt-4 flex w-full flex-row justify-between border-y-2 border-452-blue-light py-2">
-            <div className="ml-2 text-452-blue-light opacity-50 md:ml-4">
-              <ArrowLongLeftIcon className="w-10" />
-            </div>
-            <div className="mr-2 text-452-blue-light opacity-50 md:mr-4">
-              <ArrowLongRightIcon className="w-10" />
-            </div>
-          </div>
-        </div>
-      )}
+      {isLoading && <GallerySkeleton />}
 
       <div className={`${isLoading ? 'hidden' : 'block'}`}>
         <div className="relative">

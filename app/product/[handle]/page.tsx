@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { GridTileImage } from 'components/grid/tile';
 import Footer from 'components/layout/footer';
 import SectionContainer from 'components/layout/section-container';
+import GallerySkeleton from 'components/product/gallery-skeleton';
 import { ProductProvider } from 'components/product/product-context';
 import { ProductDescription } from 'components/product/product-description';
 import SwiperGallery from 'components/product/swiper-gallery';
@@ -90,15 +91,10 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       <SectionContainer className="!py-0 !pt-[80px]">
         <div className="flex flex-col justify-center gap-4 md:flex-row md:gap-8">
           <div className="w-full md:w-1/2 md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
-            <Suspense
-              fallback={
-                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
-              }
-            >
+            <Suspense fallback={<GallerySkeleton />}>
               <SwiperGallery images={product.images} />
             </Suspense>
           </div>
-
           <div className="w-full md:w-1/2 md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
             <Suspense fallback={null}>
               <ProductDescription product={product} />
