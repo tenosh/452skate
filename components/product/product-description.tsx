@@ -1,10 +1,48 @@
+'use client';
+
 import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
 import Prose from 'components/prose';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Product } from 'lib/shopify/types';
+import { useEffect, useRef, useState } from 'react';
 import { VariantSelector } from './variant-selector';
 
 export function ProductDescription({ product }: { product: Product }) {
+  const [isMainButtonVisible, setIsMainButtonVisible] = useState(true);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const [hasPassedMainButton, setHasPassedMainButton] = useState(false);
+  const mainButtonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]: any) => {
+        setIsMainButtonVisible(entry.isIntersecting);
+        setHasPassedMainButton(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0 }
+    );
+
+    if (mainButtonRef.current) {
+      observer.observe(mainButtonRef.current);
+    }
+
+    const handleScroll = () => {
+      // Check if we're near the bottom of the page
+      const isBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100; // 100px threshold
+      setIsAtBottom(isBottom);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      if (mainButtonRef.current) {
+        observer.unobserve(mainButtonRef.current);
+      }
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <>
       <div className="mb-6 flex flex-col border-b-2 border-452-blue-light pb-6 text-452-blue-light">
@@ -18,7 +56,9 @@ export function ProductDescription({ product }: { product: Product }) {
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
-      <AddToCart product={product} />
+      <div ref={mainButtonRef}>
+        <AddToCart product={product} />
+      </div>
       <section className="mb-8 last:mb-0 xl:mb-12">
         <div className="mb-4 text-xl font-medium tracking-wide text-452-blue-light lg:text-2xl xl:text-4xl">
           Información
@@ -30,6 +70,26 @@ export function ProductDescription({ product }: { product: Product }) {
           ) : null}
         </div>
       </section>
+
+      <AnimatePresence>
+        {!isMainButtonVisible && !isAtBottom && hasPassedMainButton && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-452-blue-light bg-white p-2 shadow-lg"
+          >
+            <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+              <VariantSelector
+                bottom={true}
+                options={product.options}
+                variants={product.variants}
+              />
+              <AddToCart bottom={true} product={product} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

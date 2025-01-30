@@ -10,13 +10,20 @@ import { useCart } from './cart-context';
 
 function SubmitButton({
   availableForSale,
-  selectedVariantId
+  selectedVariantId,
+  bottom
 }: {
   availableForSale: boolean;
   selectedVariantId: string | undefined;
+  bottom?: boolean;
 }) {
-  const buttonClasses =
-    'flex w-full items-center justify-center uppercase px-3 md:px-6 py-2 md:py-4 bg-452-blue-light text-sm md:text-base text-white border-2 border-transparent transition-all duration-300 hover:bg-white hover:border-2 hover:text-452-blue-light font-medium hover:border-452-blue-light';
+  const buttonClasses = clsx(
+    'flex w-full items-center justify-center uppercase px-3 md:px-6 py-2 md:py-4 bg-452-blue-light text-white border-2 border-transparent transition-all duration-300 hover:bg-white hover:border-2 hover:text-452-blue-light font-medium hover:border-452-blue-light',
+    {
+      'text-base p-2': bottom,
+      'text-lg p-4': !bottom
+    }
+  );
   const disabledClasses =
     'cursor-not-allowed opacity-60 hover:opacity-60 hover:!bg-452-blue-light hover:!text-white';
 
@@ -55,7 +62,7 @@ function SubmitButton({
   );
 }
 
-export function AddToCart({ product }: { product: Product }) {
+export function AddToCart({ product, bottom }: { product: Product; bottom?: boolean }) {
   const { variants, availableForSale } = product;
   const { addCartItem } = useCart();
   const { state } = useProduct();
@@ -75,9 +82,15 @@ export function AddToCart({ product }: { product: Product }) {
         addCartItem(finalVariant, product);
         await actionWithVariant();
       }}
-      className="mb-6 md:mb-12"
+      className={clsx('mb-6 md:mb-12', {
+        '!md:ml-auto !mb-0': bottom
+      })}
     >
-      <SubmitButton availableForSale={availableForSale} selectedVariantId={selectedVariantId} />
+      <SubmitButton
+        bottom={bottom}
+        availableForSale={availableForSale}
+        selectedVariantId={selectedVariantId}
+      />
       <p aria-live="polite" className="sr-only" role="status">
         {message}
       </p>
