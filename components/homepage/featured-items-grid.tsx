@@ -123,7 +123,7 @@ export default function FeaturedItems({
                       />
                       {product.tags?.includes('nuevo') && (
                         <div className="absolute left-4 top-4 z-10 rounded-full bg-452-blue-light px-4 py-2 font-chakra text-sm uppercase leading-none text-white">
-                          Producto Nuevo
+                          Nuevo
                         </div>
                       )}
                     </div>
