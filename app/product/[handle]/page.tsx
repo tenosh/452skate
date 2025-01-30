@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { GridTileImage } from 'components/grid/tile';
+import FeaturedItems from 'components/homepage/featured-items-grid';
+import PoliciesSection from 'components/homepage/policies-section';
 import Footer from 'components/layout/footer';
 import SectionContainer from 'components/layout/section-container';
 import GallerySkeleton from 'components/product/gallery-skeleton';
@@ -10,7 +11,6 @@ import { ProductDescription } from 'components/product/product-description';
 import SwiperGallery from 'components/product/swiper-gallery';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getPage, getProduct, getProductRecommendations } from 'lib/shopify';
-import Link from 'next/link';
 import { Suspense } from 'react';
 
 export async function generateMetadata(props: {
@@ -101,7 +101,12 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
             </Suspense>
           </div>
         </div>
-        {/* <RelatedProducts id={product.id} /> */}
+      </SectionContainer>
+      <SectionContainer>
+        <PoliciesSection />
+      </SectionContainer>
+      <SectionContainer>
+        <RelatedProducts id={product.id} />
       </SectionContainer>
       <div className="w-full">
         <Footer imagePath={footerMenuImage} />
@@ -116,34 +121,8 @@ async function RelatedProducts({ id }: { id: string }) {
   if (!relatedProducts.length) return null;
 
   return (
-    <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-        {relatedProducts.map((product) => (
-          <li
-            key={product.handle}
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
-          >
-            <Link
-              className="relative h-full w-full"
-              href={`/product/${product.handle}`}
-              prefetch={true}
-            >
-              <GridTileImage
-                alt={product.title}
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
-                }}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <FeaturedItems products={relatedProducts} title="También te podría gustar" />
+    </>
   );
 }
