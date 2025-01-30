@@ -89,7 +89,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
         }}
       />
       <SectionContainer className="!py-0 !pt-[80px]">
-        <div className="flex flex-col justify-center gap-4 md:flex-row md:gap-8">
+        <div className="mt-4 flex flex-col justify-center gap-4 md:mt-8 md:flex-row md:gap-8">
           <div className="w-full md:w-1/2 md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
             <Suspense fallback={<GallerySkeleton />}>
               <SwiperGallery images={product.images} />

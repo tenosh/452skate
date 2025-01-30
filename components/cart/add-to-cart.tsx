@@ -1,6 +1,6 @@
 'use client';
 
-import { PlusIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { addItem } from 'components/cart/actions';
 import { useProduct } from 'components/product/product-context';
@@ -16,44 +16,41 @@ function SubmitButton({
   selectedVariantId: string | undefined;
 }) {
   const buttonClasses =
-    'relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-f-green-light';
-  const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
+    'flex w-full items-center justify-center uppercase px-3 md:px-6 py-2 md:py-4 bg-452-blue-light text-sm md:text-base text-white border-2 border-transparent transition-all duration-300 hover:bg-white hover:border-2 hover:text-452-blue-light font-medium hover:border-452-blue-light';
+  const disabledClasses =
+    'cursor-not-allowed opacity-60 hover:opacity-60 hover:!bg-452-blue-light hover:!text-white';
 
   if (!availableForSale) {
     return (
       <button disabled className={clsx(buttonClasses, disabledClasses)}>
-        Out Of Stock
+        Agotado :(
       </button>
     );
   }
 
-  console.log(selectedVariantId);
   if (!selectedVariantId) {
     return (
       <button
-        aria-label="Please select an option"
+        aria-label="Selecciona una opción"
         disabled
         className={clsx(buttonClasses, disabledClasses)}
       >
-        <div className="absolute left-0 ml-4">
-          <PlusIcon className="h-5" />
-        </div>
-        Add To Cart
+        Selecciona una opción
       </button>
     );
   }
 
   return (
     <button
-      aria-label="Add to cart"
+      aria-label="Agregar al carrito"
       className={clsx(buttonClasses, {
         'hover:opacity-90': true
       })}
     >
-      <div className="absolute left-0 ml-4">
-        <PlusIcon className="h-5" />
-      </div>
-      Add To Cart
+      Agregar al carrito
+      <span className="ml-4">
+        <ShoppingCartIcon className="h-5" />
+      </span>
     </button>
   );
 }
@@ -78,6 +75,7 @@ export function AddToCart({ product }: { product: Product }) {
         addCartItem(finalVariant, product);
         await actionWithVariant();
       }}
+      className="mb-6 md:mb-12"
     >
       <SubmitButton availableForSale={availableForSale} selectedVariantId={selectedVariantId} />
       <p aria-live="polite" className="sr-only" role="status">

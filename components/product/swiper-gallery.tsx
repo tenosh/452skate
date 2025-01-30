@@ -119,7 +119,6 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
               </SwiperSlide>
             ))}
           </Swiper>
-
           <button
             onClick={slidePrev}
             className={`absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md transition-opacity md:block ${
@@ -129,7 +128,6 @@ export default function SwiperGallery({ images }: { images: ImageType[] }) {
           >
             <ChevronLeftIcon className="h-6 w-6 text-452-blue-light" />
           </button>
-
           <button
             onClick={slideNext}
             className={`absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md transition-opacity md:block ${
