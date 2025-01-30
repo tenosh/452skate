@@ -103,10 +103,10 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
         </div>
       </SectionContainer>
       <SectionContainer>
-        <PoliciesSection />
+        <RelatedProducts id={product.id} />
       </SectionContainer>
       <SectionContainer>
-        <RelatedProducts id={product.id} />
+        <PoliciesSection />
       </SectionContainer>
       <div className="w-full">
         <Footer imagePath={footerMenuImage} />
