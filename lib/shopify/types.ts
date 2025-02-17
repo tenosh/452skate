@@ -91,6 +91,7 @@ export type Page = {
 export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
   variants: ProductVariant[];
   images: Image[];
+  hoverImage: Image | undefined;
 };
 
 export type ProductOption = {

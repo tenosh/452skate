@@ -183,8 +183,14 @@ const reshapeProduct = (product: ShopifyProduct, filterHiddenProducts: boolean =
   return {
     ...rest,
     images: reshapeImages(images, product.title),
+    hoverImage: getHoverImage(product.images),
     variants: removeEdgesAndNodes(variants)
   };
+};
+
+const getHoverImage = (images: Connection<Image>) => {
+  const flattened = removeEdgesAndNodes(images);
+  return flattened.length > 1 ? flattened[flattened.length - 1] : flattened[0];
 };
 
 const reshapeProducts = (products: ShopifyProduct[]) => {
