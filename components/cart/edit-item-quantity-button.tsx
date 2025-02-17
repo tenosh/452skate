@@ -10,9 +10,9 @@ function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
   return (
     <button
       type="submit"
-      aria-label={type === 'plus' ? 'Increase item quantity' : 'Reduce item quantity'}
+      aria-label={type === 'plus' ? 'Aumentar cantidad' : 'Disminuir cantidad'}
       className={clsx(
-        'ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 text-f-green-dark transition-all duration-200',
+        'ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 text-452-blue-dark transition-all duration-200',
         {
           'ml-auto': type === 'minus'
         }

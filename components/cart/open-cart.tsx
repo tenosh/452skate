@@ -11,10 +11,10 @@ export default function OpenCart({
 }) {
   return (
     <MagneticElement>
-      <div className="justify-centert relative top-[.5px] flex h-6 w-6 items-center transition-colors lg:h-7 lg:w-7">
+      <div className="justify-centert relative top-[.5px] flex h-6 w-6 items-center transition-colors lg:h-8 lg:w-8">
         <AnimatedIcon icon={<ShoppingCartIcon className={className} />} />
         {quantity ? (
-          <div className="bg-f-orange absolute right-0 top-0 -mr-2 -mt-2 h-4 w-4 rounded text-[11px] font-medium">
+          <div className="absolute right-0 top-0 -mr-2 -mt-3 h-5 w-5 rounded-full bg-452-blue-light text-[13px] font-medium">
             {quantity}
           </div>
         ) : null}

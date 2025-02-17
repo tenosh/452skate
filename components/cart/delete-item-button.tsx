@@ -26,9 +26,9 @@ export function DeleteItemButton({
       <button
         type="submit"
         aria-label="Eliminar articulo"
-        className="flex h-[24px] w-[24px] items-center justify-center rounded-full border border-f-green-dark bg-f-green-light"
+        className="flex h-[24px] w-[24px] items-center justify-center rounded-full border border-452-blue-light bg-white"
       >
-        <XMarkIcon className="mx-[1px] h-4 w-4 text-f-green-dark" />
+        <XMarkIcon className="mx-[1px] h-4 w-4 text-452-blue-light" />
       </button>
       <p aria-live="polite" className="sr-only" role="status">
         {message}

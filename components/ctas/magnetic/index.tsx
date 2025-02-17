@@ -22,8 +22,10 @@ export default function MagneticElement({ className = '', children }: MagneticEl
     if (!ref.current) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (!ref.current) return;
+
       const { clientX, clientY } = e;
-      const { height, width, left, top } = ref.current!.getBoundingClientRect();
+      const { height, width, left, top } = ref.current.getBoundingClientRect();
       const centerX = left + width / 2;
       const centerY = top + height / 2;
       const deltaX = clientX - centerX;
