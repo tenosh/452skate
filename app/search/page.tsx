@@ -23,13 +23,13 @@ export default async function SearchPage(props: {
       {searchValue ? (
         <p className="mb-4">
           {products.length === 0
-            ? 'There are no products that match '
-            : `Showing ${products.length} ${resultsText} for `}
+            ? 'No hay productos que coincidan con '
+            : `Mostrando ${products.length} ${resultsText} para `}
           <span className="font-bold">&quot;{searchValue}&quot;</span>
         </p>
       ) : null}
       {products.length > 0 ? (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <ProductGridItems products={products} />
         </Grid>
       ) : null}

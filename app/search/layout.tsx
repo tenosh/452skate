@@ -1,24 +1,28 @@
 import Footer from 'components/layout/footer';
-import Collections from 'components/layout/search/collections';
-import FilterList from 'components/layout/search/filter';
+import FilterDropdown from 'components/layout/search/filter-dropdown';
 import { sorting } from 'lib/constants';
+import { getPage } from 'lib/shopify';
 import ChildrenWrapper from './children-wrapper';
+export default async function SearchLayout({ children }: { children: React.ReactNode }) {
+  //get homepage metadata
+  const pageData = await getPage('homepage');
 
-export default function SearchLayout({ children }: { children: React.ReactNode }) {
+  // Extract image URLs from metafields
+  const footerMenuImage =
+    pageData?.metafields?.find((field) => field.key === 'imagen_de_menu_de_pie')?.reference?.image
+      ?.url || '';
   return (
     <>
-      <div className="dark:text-f-green-light mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black md:flex-row">
-        <div className="order-first w-full flex-none md:max-w-[125px]">
-          <Collections />
+      <div className="mx-auto max-w-screen-2xl !py-0 px-4 !pt-[80px] pb-4">
+        <div className="mb-6 flex items-center justify-between border-b border-452-blue-light pb-4">
+          {/* <CollectionsModal /> */}
+          <FilterDropdown list={sorting} title="Sort by" />
         </div>
-        <div className="order-last min-h-screen w-full md:order-none">
+        <div className="min-h-screen w-full">
           <ChildrenWrapper>{children}</ChildrenWrapper>
         </div>
-        <div className="order-none flex-none md:order-last md:w-[125px]">
-          <FilterList list={sorting} title="Sort by" />
-        </div>
       </div>
-      <Footer imagePath="" />
+      <Footer imagePath={footerMenuImage} />
     </>
   );
 }

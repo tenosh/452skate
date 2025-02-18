@@ -1,3 +1,6 @@
+'use client';
+
+import clsx from 'clsx';
 import Price from 'components/price';
 import { motion } from 'framer-motion';
 import { Product } from 'lib/shopify/types';
@@ -9,13 +12,15 @@ interface ProductCardProps {
   imageSizes?: string;
   showHoverEffect?: boolean;
   priority?: boolean;
+  showMinHeight?: boolean;
 }
 
 export default function ProductCard({
   product,
   imageSizes = '(min-width: 1024px) 25vw, (min-width: 768px) 33.333vw, (min-width: 640px) 50vw, 100vw',
   showHoverEffect = true,
-  priority = false
+  priority = false,
+  showMinHeight = true
 }: ProductCardProps) {
   return (
     <Link
@@ -36,7 +41,7 @@ export default function ProductCard({
                 src={product.featuredImage.url}
                 fill
                 sizes={imageSizes}
-                priority={true}
+                priority={priority}
                 alt={product.title}
               />
             </motion.div>
@@ -52,6 +57,7 @@ export default function ProductCard({
                   src={product.hoverImage.url}
                   fill
                   sizes={imageSizes}
+                  priority={priority}
                   alt={`${product.title} - Hover`}
                 />
               </motion.div>
@@ -68,13 +74,18 @@ export default function ProductCard({
           />
         )}
         {product.tags?.includes('nuevo') && (
-          <div className="absolute left-4 top-4 z-10 rounded-full bg-452-blue-light px-4 py-2 font-chakra text-sm uppercase leading-none text-white">
+          <div className="absolute left-4 top-4 z-10 rounded-full bg-452-blue-light px-4 py-2 font-chakra text-sm uppercase text-white">
             Nuevo
           </div>
         )}
       </div>
-      <div className="flex min-h-[10rem] flex-col gap-4 p-4 font-oswald text-base text-452-blue-light md:min-h-[15rem] md:gap-6 lg:text-2xl">
-        <h3 title={product.title} className="truncate leading-none tracking-wide">
+      <div
+        className={clsx(
+          'flex flex-col gap-4 p-4 font-oswald text-base text-452-blue-light md:gap-6 lg:text-2xl',
+          showMinHeight && 'min-h-[10rem] md:min-h-[15rem]'
+        )}
+      >
+        <h3 title={product.title} className="truncate tracking-wide">
           {product.title}
         </h3>
         <Price
