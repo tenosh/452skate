@@ -10,14 +10,10 @@ import { Collection } from 'lib/shopify/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Fragment, useState } from 'react';
 
-const skeleton = 'mb-3 h-4 w-5/6 animate-pulse rounded';
-const activeAndTitles = 'bg-neutral-800 dark:bg-neutral-300';
-const items = 'bg-neutral-400 dark:bg-neutral-700';
-
 export default function CollectionsModal({ collections }: { collections: Collection[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [collectionsCollapsed, setCollectionsCollapsed] = useState(false);
-  const [filtersCollapsed, setFiltersCollapsed] = useState(false);
+  const [collapsedFilters, setCollapsedFilters] = useState<Record<string, boolean>>({});
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -45,6 +41,35 @@ export default function CollectionsModal({ collections }: { collections: Collect
   const isFilterSelected = (filterType: string, value: string) => {
     const currentFilters = searchParams.get(filterType)?.split(',') || [];
     return currentFilters.includes(value);
+  };
+
+  const getRelevantFilters = () => {
+    const pathSegments = pathname.split('/');
+    const category = pathSegments[pathSegments.length - 1];
+
+    if (pathname === '/search') {
+      const mergedFilters: Record<string, string[]> = {};
+
+      Object.values(menuFilters).forEach((categoryFilters) => {
+        Object.entries(categoryFilters).forEach(([filterType, values]) => {
+          if (!mergedFilters[filterType]) {
+            mergedFilters[filterType] = [];
+          }
+          mergedFilters[filterType] = [...new Set([...mergedFilters[filterType], ...values])];
+        });
+      });
+
+      return mergedFilters;
+    }
+
+    return menuFilters[category as keyof typeof menuFilters] || {};
+  };
+
+  const toggleFilter = (filterType: string) => {
+    setCollapsedFilters((prev) => ({
+      ...prev,
+      [filterType]: !prev[filterType]
+    }));
   };
 
   return (
@@ -133,49 +158,43 @@ export default function CollectionsModal({ collections }: { collections: Collect
                   </div>
                 </div>
 
-                <div>
-                  <button
-                    onClick={() => setFiltersCollapsed(!filtersCollapsed)}
-                    className="flex w-full items-center justify-between border-b border-452-blue-light py-2"
-                  >
-                    <h3 className="font-semibold text-452-blue-light">Filtros</h3>
-                    <ChevronUpIcon
-                      className={clsx(
-                        'h-5 w-5 text-452-blue-light transition-transform duration-200',
-                        filtersCollapsed ? 'rotate-180' : ''
-                      )}
-                    />
-                  </button>
-                  <div
-                    className={clsx(
-                      'mt-2 space-y-4 overflow-hidden transition-all duration-200',
-                      filtersCollapsed ? 'mt-0 h-0' : 'h-auto'
-                    )}
-                  >
-                    {Object.entries(menuFilters).map(([category, filters]) => (
-                      <div key={category} className="space-y-2">
-                        <h4 className="font-medium capitalize text-452-blue-light">{category}</h4>
-                        {Object.entries(filters).map(([filterType, values]) => (
-                          <div key={filterType} className="ml-2 space-y-1">
-                            <h5 className="text-sm font-medium capitalize text-452-blue-light">
-                              {filterType}
-                            </h5>
-                            {values.map((value) => (
-                              <label key={value} className="flex items-center gap-2 px-2">
-                                <input
-                                  type="checkbox"
-                                  checked={isFilterSelected(filterType, value)}
-                                  onChange={() => handleFilterChange(filterType, value)}
-                                  className="text-452-blue-light focus:ring-452-blue-light"
-                                />
-                                <span className="text-sm text-452-blue-light">{value}</span>
-                              </label>
-                            ))}
-                          </div>
+                <div className="mt-4 space-y-4">
+                  {Object.entries(getRelevantFilters()).map(([filterType, values]) => (
+                    <div key={filterType}>
+                      <button
+                        onClick={() => toggleFilter(filterType)}
+                        className="flex w-full items-center justify-between border-b border-452-blue-light py-2"
+                      >
+                        <h3 className="font-semibold capitalize text-452-blue-light">
+                          {filterType}
+                        </h3>
+                        <ChevronUpIcon
+                          className={clsx(
+                            'h-5 w-5 text-452-blue-light transition-transform duration-200',
+                            collapsedFilters[filterType] ? 'rotate-180' : ''
+                          )}
+                        />
+                      </button>
+                      <div
+                        className={clsx(
+                          'mt-2 space-y-2 overflow-hidden transition-all duration-200',
+                          collapsedFilters[filterType] ? 'mt-0 h-0' : 'h-auto'
+                        )}
+                      >
+                        {values.map((value) => (
+                          <label key={value} className="flex items-center gap-2 px-2">
+                            <input
+                              type="checkbox"
+                              checked={isFilterSelected(filterType, value)}
+                              onChange={() => handleFilterChange(filterType, value)}
+                              className="text-452-blue-light focus:ring-452-blue-light"
+                            />
+                            <span className="text-sm text-452-blue-light">{value}</span>
+                          </label>
                         ))}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </DialogPanel>
