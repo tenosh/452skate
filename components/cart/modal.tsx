@@ -4,7 +4,6 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/re
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import LoadingDots from 'components/loading-dots';
 import Price from 'components/price';
-import { useScroll } from 'framer-motion';
 import { DEFAULT_OPTION } from 'lib/constants';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
@@ -28,7 +27,6 @@ export default function CartModal() {
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
-  const { scrollY } = useScroll();
 
   useEffect(() => {
     if (!cart) {
