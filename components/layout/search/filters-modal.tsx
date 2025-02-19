@@ -112,7 +112,7 @@ export default function CollectionsModal({ collections }: { collections: Collect
                   <CloseCart />
                 </button>
               </div>
-              <div className="scrollbar-hide mt-4 flex flex-col gap-4 overflow-y-auto">
+              <div className="scrollbar-hide mt-4 flex flex-col overflow-y-auto">
                 <div>
                   <button
                     onClick={() => setCollectionsCollapsed(!collectionsCollapsed)}
@@ -181,15 +181,37 @@ export default function CollectionsModal({ collections }: { collections: Collect
                           collapsedFilters[filterType] ? 'mt-0 h-0' : 'h-auto'
                         )}
                       >
-                        {values.map((value) => (
-                          <label key={value} className="flex items-center gap-2 px-2">
-                            <input
-                              type="checkbox"
-                              checked={isFilterSelected(filterType, value)}
-                              onChange={() => handleFilterChange(filterType, value)}
-                              className="text-452-blue-light focus:ring-452-blue-light"
-                            />
-                            <span className="text-sm text-452-blue-light">{value}</span>
+                        {values.map((value, index) => (
+                          <label
+                            key={value}
+                            className={clsx(
+                              'group flex items-center gap-2 px-2',
+                              index === 0 && 'pt-1'
+                            )}
+                          >
+                            <div className="relative flex h-5 w-5 items-center justify-center">
+                              <input
+                                type="checkbox"
+                                checked={isFilterSelected(filterType, value)}
+                                onChange={() => handleFilterChange(filterType, value)}
+                                className="peer h-5 w-5 cursor-pointer appearance-none rounded-sm border border-452-blue-light bg-white transition-all checked:border-452-blue-light checked:bg-452-blue-light hover:border-452-blue-dark focus:outline-none focus:ring-2 focus:ring-452-blue-light focus:ring-offset-2"
+                              />
+                              <svg
+                                className="pointer-events-none absolute h-3 w-3 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <polyline points="20 6 9 17 4 12" />
+                              </svg>
+                            </div>
+                            <span className="text-sm text-452-blue-light group-hover:text-452-blue-dark">
+                              {value}
+                            </span>
                           </label>
                         ))}
                       </div>
