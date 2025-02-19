@@ -1,6 +1,6 @@
 import Footer from 'components/layout/footer';
-import CollectionsModal from 'components/layout/search/collections-modal';
 import FilterDropdown from 'components/layout/search/filter-dropdown';
+import FiltersModal from 'components/layout/search/filters-modal';
 import { sorting } from 'lib/constants';
 import { getCollections, getPage } from 'lib/shopify';
 import ChildrenWrapper from './children-wrapper';
@@ -22,7 +22,7 @@ export default async function SearchLayout({ children }: { children: React.React
         <div className="fixed left-0 right-0 top-[80px] z-20 bg-white">
           <div className="border-y-2 border-452-blue-light p-4">
             <div className="container flex items-center justify-between">
-              <CollectionsModal collections={collections} />
+              <FiltersModal collections={collections} />
               <FilterDropdown list={sorting} title="Sort by" />
             </div>
           </div>

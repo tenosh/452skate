@@ -27,9 +27,43 @@ export const TAGS = {
 };
 
 export const menuFilters = {
+  patinetas: {
+    marca: [
+      'Catrina',
+      'Beat',
+      'Glitch',
+      'Zenit',
+      'Suburbios',
+      'Santa Cruz',
+      'Neighborhood',
+      'Copal',
+      'Deza',
+      'Tricolor',
+      'Toy Machine',
+      'Baker',
+      'Deathwish',
+      'Flip'
+    ],
+    tipo: ['Cruiser', 'Mini cruiser', 'Longboard', 'Penny', 'Clásica']
+  },
   tablas: {
     medida: ['7.25"', '7.5"', '7.75"', '8.0"', '8.125"', '8.25"', '8.5"', '8.75"'],
-    marca: ['Alakin', 'Catrina', 'Zenit', 'Jaguar']
+    marca: [
+      'Catrina',
+      'Beat',
+      'Glitch',
+      'Zenit',
+      'Suburbios',
+      'Santa Cruz',
+      'Neighborhood',
+      'Copal',
+      'Deza',
+      'Tricolor',
+      'Toy Machine',
+      'Baker',
+      'Deathwish',
+      'Flip'
+    ]
   },
   trucks: {
     medida: ['8.0"', '8.25"', '8.5"'],
