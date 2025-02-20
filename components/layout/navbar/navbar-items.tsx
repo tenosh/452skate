@@ -80,7 +80,6 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
     setCloseTimeout(timeout);
   };
 
-  // Add this new handler
   const handleMenuClick = () => {
     setActiveMenu(null);
   };
@@ -239,14 +238,6 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
                                                 initial: { scaleX: 0, transformOrigin: 'left' },
                                                 hover: { scaleX: 1, transformOrigin: 'left' }
                                               }}
-                                              initial="initial"
-                                              whileHover="hover"
-                                              animate={
-                                                pathname + window.location.search ===
-                                                `${item.path}?${category}=${value.replace('"', '').toLocaleLowerCase()}`
-                                                  ? 'hover'
-                                                  : 'initial'
-                                              }
                                               transition={{ duration: 0.3 }}
                                             />
                                           </span>
