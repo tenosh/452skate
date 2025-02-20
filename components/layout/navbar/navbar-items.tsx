@@ -80,6 +80,11 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
     setCloseTimeout(timeout);
   };
 
+  // Add this new handler
+  const handleMenuClick = () => {
+    setActiveMenu(null);
+  };
+
   // effects
   useEffect(() => {
     return () => {
@@ -141,6 +146,7 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
                           href={item.path}
                           prefetch={true}
                           className="relative inline-block text-base uppercase tracking-normal lg:text-lg lg:tracking-wider"
+                          onClick={handleMenuClick}
                         >
                           {item.title}
                           <motion.div
@@ -223,6 +229,7 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
                                         <Link
                                           href={`${item.path}?${category}=${value.replace('"', '').toLocaleLowerCase()}`}
                                           className="ml-2 font-chakra text-base tracking-wider text-452-blue-light hover:text-452-blue-dark md:text-lg"
+                                          onClick={handleMenuClick}
                                         >
                                           <span className="relative inline-block">
                                             {value}
@@ -232,6 +239,14 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
                                                 initial: { scaleX: 0, transformOrigin: 'left' },
                                                 hover: { scaleX: 1, transformOrigin: 'left' }
                                               }}
+                                              initial="initial"
+                                              whileHover="hover"
+                                              animate={
+                                                pathname + window.location.search ===
+                                                `${item.path}?${category}=${value.replace('"', '').toLocaleLowerCase()}`
+                                                  ? 'hover'
+                                                  : 'initial'
+                                              }
                                               transition={{ duration: 0.3 }}
                                             />
                                           </span>
