@@ -17,7 +17,7 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
   newParams.delete('q');
 
   return (
-    <li className="mt-2 flex text-black dark:text-f-green-light" key={item.title}>
+    <li className="dark:text-f-green-light mt-2 flex text-black" key={item.title}>
       <DynamicTag
         href={createUrl(item.path, newParams)}
         className={clsx(
@@ -38,17 +38,20 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
   const searchParams = useSearchParams();
   const active = searchParams.get('sort') === item.slug;
   const q = searchParams.get('q');
-  const href = createUrl(
-    pathname,
-    new URLSearchParams({
-      ...(q && { q }),
-      ...(item.slug && item.slug.length && { sort: item.slug })
-    })
-  );
+
+  // Create new params object with existing parameters
+  const newParams = new URLSearchParams(searchParams.toString());
+
+  // Update sort parameter
+  if (item.slug && item.slug.length) {
+    newParams.set('sort', item.slug);
+  }
+
+  const href = createUrl(pathname, newParams);
   const DynamicTag = active ? 'p' : Link;
 
   return (
-    <li className="mt-2 flex text-sm text-black dark:text-f-green-light" key={item.title}>
+    <li className="dark:text-f-green-light mt-2 flex text-sm text-black" key={item.title}>
       <DynamicTag
         prefetch={!active ? false : undefined}
         href={href}

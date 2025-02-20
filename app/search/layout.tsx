@@ -23,7 +23,7 @@ export default async function SearchLayout({ children }: { children: React.React
           <div className="border-y-2 border-452-blue-light p-4">
             <div className="container flex items-center justify-between">
               <FiltersModal collections={collections} />
-              <FilterDropdown list={sorting} title="Sort by" />
+              <FilterDropdown list={sorting} title="Ordenar por: " />
             </div>
           </div>
         </div>
