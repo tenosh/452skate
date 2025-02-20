@@ -46,7 +46,11 @@ export default async function SearchPage(props: {
         <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <ProductGridItems products={products} />
         </Grid>
-      ) : null}
+      ) : (
+        <div className="flex h-full flex-col items-center justify-center">
+          <p className="text-center text-452-blue-light">No se encontraron productos</p>
+        </div>
+      )}
     </>
   );
 }
