@@ -84,7 +84,7 @@ export default function CollectionsModal({ collections }: { collections: Collect
         className="flex items-center gap-2 text-452-blue-light hover:opacity-80"
       >
         <AdjustmentsHorizontalIcon className="h-6 w-6" />
-        <span className="font-oswald text-lg">Filtros</span>
+        <span className="hidden font-oswald text-lg md:block">Filtros</span>
       </button>
 
       <Transition show={isOpen}>
