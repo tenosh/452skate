@@ -6,8 +6,6 @@ interface ProductTileProps {
 }
 
 const ProductTile: React.FC<ProductTileProps> = ({ name, price }) => {
-  console.log(name);
-  console.log(price);
   return (
     <div className="h-64 w-48 bg-gray-400">
       <h3 className="product-name">{name}</h3>

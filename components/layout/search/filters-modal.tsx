@@ -64,7 +64,9 @@ export default function CollectionsModal({ collections }: { collections: Collect
       return mergedFilters;
     }
 
-    return menuFilters[category as keyof typeof menuFilters] || {};
+    // Map "tornilleria-y-accesorios" to "accesorios"
+    const categoryKey = category === 'tornilleria-y-accesorios' ? 'accesorios' : category;
+    return menuFilters[categoryKey as keyof typeof menuFilters] || {};
   };
 
   const toggleFilter = (filterType: string) => {

@@ -44,7 +44,7 @@ export const menuFilters = {
       'Deathwish',
       'Flip'
     ],
-    tipo: ['Cruiser', 'Mini cruiser', 'Longboard', 'Penny', 'Clásica']
+    tipo: ['Cruiser', 'Old school', 'Longboard', 'Penny', 'Clásica']
   },
   tablas: {
     medida: ['7.25"', '7.5"', '7.75"', '8.0"', '8.125"', '8.25"', '8.5"', '8.75"'],
@@ -71,7 +71,10 @@ export const menuFilters = {
     marca: ['Alakin', 'Independent', 'Destructo']
   },
   llantas: {
-    marca: ['Zenit', 'Catrina', 'Spitfire', 'Alakin', 'Ricta', 'Travel on wheels', 'Bones']
+    marca: ['Zenit', 'Catrina', 'Spitfire', 'Alakin', 'Ricta', 'Travel on wheels', 'Bones'],
+    medida: ['51mm', '52mm', '53mm', '54mm', '55mm', '56mm', '57mm', '58mm'],
+    molde: ['cónico', 'cilíndrico', 'clásico'],
+    dureza: ['97', '98', '99', '100', '101']
   },
   baleros: {
     marca: [
@@ -84,7 +87,9 @@ export const menuFilters = {
       'Alakin',
       'Catrina',
       'Industriales'
-    ]
+    ],
+    abec: ['5', '7', '9'],
+    tipo: ['Tapa sellada', 'Tapa de neopreno']
   },
   lijas: {
     marca: [
