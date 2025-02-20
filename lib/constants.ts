@@ -74,7 +74,7 @@ export const menuFilters = {
     marca: ['Zenit', 'Catrina', 'Spitfire', 'Alakin', 'Ricta', 'Travel on wheels', 'Bones'],
     medida: ['51mm', '52mm', '53mm', '54mm', '55mm', '56mm', '57mm', '58mm'],
     molde: ['Cónico', 'Cilíndrico', 'Clásico'],
-    dureza: ['97', '98', '99', '100', '101']
+    dureza: ['97a', '98a', '99a', '100a', '101a']
   },
   baleros: {
     marca: [

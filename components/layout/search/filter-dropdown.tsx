@@ -43,7 +43,7 @@ export default function FilterDropdown({ list, title }: { list: ListItem[]; titl
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 hover:opacity-80"
         >
-          <span className="font-chakra leading-normal">{active}</span>
+          <span className="font-chakra leading-8">{active}</span>
           <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
             <ChevronDownIcon className="h-5 w-5" />
           </motion.div>
