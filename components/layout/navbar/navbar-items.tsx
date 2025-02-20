@@ -132,7 +132,9 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
                       <motion.div
                         whileHover="hover"
                         initial="initial"
-                        animate={activeMenu === item.title ? 'hover' : 'initial'}
+                        animate={
+                          activeMenu === item.title || pathname === item.path ? 'hover' : 'initial'
+                        }
                         style={{ color: textColor }}
                       >
                         <Link

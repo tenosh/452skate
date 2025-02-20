@@ -190,7 +190,8 @@ export default function CollectionsModal({ collections }: { collections: Collect
                             key={value}
                             className={clsx(
                               'group flex items-center gap-2 px-2',
-                              index === 0 && 'pt-1'
+                              index === 0 && 'pt-1',
+                              index === values.length - 1 && 'pb-1'
                             )}
                           >
                             <div className="relative flex h-5 w-5 items-center justify-center">
