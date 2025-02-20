@@ -41,7 +41,12 @@ export default function NavbarItems({ menu, skipScrollAnimation = false }: Navba
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
+  const [isHomePage, setIsHomePage] = useState(false);
+
+  // Update isHomePage when pathname changes
+  useEffect(() => {
+    setIsHomePage(pathname === '/');
+  }, [pathname]);
 
   const { scrollY } = useScroll();
   // Move useTransform hooks outside of conditional logic
