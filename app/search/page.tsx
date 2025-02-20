@@ -15,7 +15,21 @@ export default async function SearchPage(props: {
   const { sort, q: searchValue } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const products = await getProducts({ sortKey, reverse, query: searchValue });
+  // Create URLSearchParams object from searchParams
+  const urlSearchParams = new URLSearchParams();
+  Object.entries(searchParams || {}).forEach(([key, value]) => {
+    if (typeof value === 'string') {
+      urlSearchParams.set(key, value);
+    }
+  });
+
+  const products = await getProducts({
+    sortKey,
+    reverse,
+    query: searchValue,
+    searchParams: urlSearchParams
+  });
+
   const resultsText = products.length > 1 ? 'results' : 'result';
 
   return (

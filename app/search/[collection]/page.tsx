@@ -29,7 +29,21 @@ export default async function CategoryPage(props: {
   const params = await props.params;
   const { sort } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse });
+
+  // Create URLSearchParams object from searchParams
+  const urlSearchParams = new URLSearchParams();
+  Object.entries(searchParams || {}).forEach(([key, value]) => {
+    if (typeof value === 'string') {
+      urlSearchParams.set(key, value);
+    }
+  });
+
+  const products = await getCollectionProducts({
+    collection: params.collection,
+    sortKey,
+    reverse,
+    searchParams: urlSearchParams
+  });
 
   return (
     <section>
@@ -38,7 +52,7 @@ export default async function CategoryPage(props: {
           {`No hay productos en esta colección`}
         </p>
       ) : (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <ProductGridItems products={products} />
         </Grid>
       )}

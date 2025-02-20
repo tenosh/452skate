@@ -296,12 +296,24 @@ export async function getCollection(handle: string): Promise<Collection | undefi
 export async function getCollectionProducts({
   collection,
   reverse,
-  sortKey
+  sortKey,
+  searchParams
 }: {
   collection: string;
   reverse?: boolean;
   sortKey?: string;
-}): Promise<Product[]> {
+  searchParams?: URLSearchParams;
+}) {
+  // Get all filter parameters from URL
+  const filters: Record<string, string[]> = {};
+  if (searchParams) {
+    for (const [key, value] of searchParams.entries()) {
+      if (key !== 'sort' && key !== 'q') {
+        filters[key] = value.toLowerCase().split(',');
+      }
+    }
+  }
+
   const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
     query: getCollectionProductsQuery,
     tags: [TAGS.collections, TAGS.products],
@@ -317,7 +329,19 @@ export async function getCollectionProducts({
     return [];
   }
 
-  return reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products));
+  let products = reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products));
+
+  // Apply filters if any exist
+  if (Object.keys(filters).length > 0) {
+    products = products.filter((product) => {
+      const productTags = product.tags.map((tag) => tag.toLowerCase());
+      return Object.entries(filters).every(([filterType, filterValues]) => {
+        return filterValues.some((value) => productTags.includes(value));
+      });
+    });
+  }
+
+  return products;
 }
 
 export async function getProductTags(): Promise<string[]> {
@@ -431,12 +455,24 @@ export async function getProductRecommendations(productId: string): Promise<Prod
 export async function getProducts({
   query,
   reverse,
-  sortKey
+  sortKey,
+  searchParams
 }: {
   query?: string;
   reverse?: boolean;
   sortKey?: string;
+  searchParams?: URLSearchParams;
 }): Promise<Product[]> {
+  // Get all filter parameters from URL
+  const filters: Record<string, string[]> = {};
+  if (searchParams) {
+    for (const [key, value] of searchParams.entries()) {
+      if (key !== 'sort' && key !== 'q') {
+        filters[key] = value.toLowerCase().split(',');
+      }
+    }
+  }
+
   const res = await shopifyFetch<ShopifyProductsOperation>({
     query: getProductsQuery,
     tags: [TAGS.products],
@@ -447,7 +483,19 @@ export async function getProducts({
     }
   });
 
-  return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+  let products = reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+
+  // Apply filters if any exist
+  if (Object.keys(filters).length > 0) {
+    products = products.filter((product) => {
+      const productTags = product.tags.map((tag) => tag.toLowerCase());
+      return Object.entries(filters).every(([filterType, filterValues]) => {
+        return filterValues.some((value) => productTags.includes(value));
+      });
+    });
+  }
+
+  return products;
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
