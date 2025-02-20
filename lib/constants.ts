@@ -49,6 +49,7 @@ export const menuFilters = {
   tablas: {
     medida: ['7.25"', '7.5"', '7.75"', '8.0"', '8.125"', '8.25"', '8.5"', '8.75"'],
     marca: [
+      'Alakin',
       'Catrina',
       'Beat',
       'Glitch',

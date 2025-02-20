@@ -23,16 +23,17 @@ export default function CollectionsModal({ collections }: { collections: Collect
   const handleFilterChange = (filterType: string, value: string) => {
     const params = new URLSearchParams(searchParams);
     const currentFilters = params.get(filterType)?.split(',') || [];
+    const urlValue = filterType === 'medida' ? value.replace(/"/g, '') : value;
 
-    if (currentFilters.includes(value)) {
-      const newFilters = currentFilters.filter((filter) => filter !== value);
+    if (currentFilters.includes(urlValue)) {
+      const newFilters = currentFilters.filter((filter) => filter !== urlValue);
       if (newFilters.length > 0) {
         params.set(filterType, newFilters.join(','));
       } else {
         params.delete(filterType);
       }
     } else {
-      params.set(filterType, [...currentFilters, value].join(','));
+      params.set(filterType, [...currentFilters, urlValue].join(','));
     }
 
     router.push(`${pathname}?${params.toString()}`);
@@ -40,7 +41,8 @@ export default function CollectionsModal({ collections }: { collections: Collect
 
   const isFilterSelected = (filterType: string, value: string) => {
     const currentFilters = searchParams.get(filterType)?.split(',') || [];
-    return currentFilters.includes(value);
+    const urlValue = filterType === 'medida' ? value.replace(/"/g, '') : value;
+    return currentFilters.includes(urlValue);
   };
 
   const getRelevantFilters = () => {

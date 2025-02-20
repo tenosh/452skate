@@ -21,7 +21,7 @@ export default async function SearchPage(props: {
   return (
     <>
       {searchValue ? (
-        <p className="mb-4">
+        <p className="mb-4 text-center text-452-blue-light">
           {products.length === 0
             ? 'No hay productos que coincidan con '
             : `Mostrando ${products.length} ${resultsText} para `}
