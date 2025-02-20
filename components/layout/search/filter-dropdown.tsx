@@ -37,13 +37,13 @@ export default function FilterDropdown({ list, title }: { list: ListItem[]; titl
 
   return (
     <div className="relative text-452-blue-light" ref={ref}>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row items-center gap-4">
         <span className="hidden font-oswald text-lg md:block">{title}</span>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 hover:opacity-80"
         >
-          <span className="font-chakra leading-8">{active}</span>
+          <span className="font-chakra">{active}</span>
           <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
             <ChevronDownIcon className="h-5 w-5" />
           </motion.div>

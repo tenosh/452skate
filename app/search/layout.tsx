@@ -1,9 +1,11 @@
 import Footer from 'components/layout/footer';
 import FilterDropdown from 'components/layout/search/filter-dropdown';
+import FilterTags from 'components/layout/search/filter-tags';
 import FiltersModal from 'components/layout/search/filters-modal';
 import { sorting } from 'lib/constants';
 import { getCollections, getPage } from 'lib/shopify';
 import ChildrenWrapper from './children-wrapper';
+
 export default async function SearchLayout({ children }: { children: React.ReactNode }) {
   //get homepage metadata
   const pageData = await getPage('homepage');
@@ -28,6 +30,9 @@ export default async function SearchLayout({ children }: { children: React.React
           </div>
         </div>
         <div className="min-h-screen w-full pt-[72px]">
+          <div className="py-4">
+            <FilterTags />
+          </div>
           <ChildrenWrapper>{children}</ChildrenWrapper>
         </div>
       </div>
